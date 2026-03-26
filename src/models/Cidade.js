@@ -6,6 +6,7 @@ class Cidade extends Model {
     super.init({
       nome: { 
         type: DataTypes.STRING, 
+        allowNull: false,
         validate: {
           notEmpty: { msg: "Nome da Cidade deve ser preenchida!" },
           len: { args: [2, 50], msg: "Nome da Cidade deve ter entre 2 e 50 letras!" }
@@ -13,6 +14,7 @@ class Cidade extends Model {
       },
       habitantes: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         validate: {
           isInt: { msg: "Habitantes deve ser um número inteiro!" },
           min: { args: [0], msg: "Habitantes não pode ser negativo!" }
@@ -20,6 +22,7 @@ class Cidade extends Model {
       },
       area: {
         type: DataTypes.DOUBLE,
+        allowNull: false,
         validate: {
           isFloat: { msg: "Área deve ser um número!" },
           min: { args: [0.0], msg: "Área não pode ser negativa!" }

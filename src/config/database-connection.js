@@ -22,10 +22,10 @@ function databaseInserts() {
         const uf1 = await Uf.create({ sigla: "ES", nome: "Espírito Santo" });
         const uf2 = await Uf.create({ sigla: "MG", nome: "Minas Gerais" });
 
-        const cidade1 = await Cidade.create({ nome: "Cachoeiro", ufId: 1 });
-        const cidade2 = await Cidade.create({ nome: "Alegre", ufId: 1 });
-        const cidade3 = await Cidade.create({ nome: "Belo Horizonte", ufId: 2 });
-        const cidade4 = await Cidade.create({ nome: "Lavras", ufId: 2 });
+        const cidade1 = await Cidade.create({ nome: "Cachoeiro", habitantes: 210000, area: 876.8, ufId: 1 });
+        const cidade2 = await Cidade.create({ nome: "Alegre", habitantes: 31000, area: 772.0, ufId: 1 });
+        const cidade3 = await Cidade.create({ nome: "Belo Horizonte", habitantes: 2520000, area: 331.4, ufId: 2 });
+        const cidade4 = await Cidade.create({ nome: "Lavras", habitantes: 105000, area: 564.7, ufId: 2 });
 
     })();
 }

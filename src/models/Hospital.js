@@ -55,15 +55,14 @@ class Hospital extends Model {
           type: DataTypes.ENUM(
             'PUBLICO',
             'PRIVADO',
-            'FILANTRÓPICO',
-            'MILITAR'
+            'FILANTRÓPICO'
           ),
           allowNull: false,
           validate: {
             notNull: { msg: 'Tipo é obrigatório' },
             isIn: {
-              args: [['PUBLICO', 'PRIVADO', 'FILANTRÓPICO', 'MILITAR']],
-              msg: 'Tipo deve ser um valor válido de TipoHospital',
+              args: [['PUBLICO', 'PRIVADO', 'FILANTRÓPICO']],
+              msg: 'Tipo deve ser um valor válido de Tipo Hospital',
             },
           },
         },

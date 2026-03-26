@@ -3,16 +3,19 @@ import { databaseConfig } from "./database-config.js";
 
 import { Uf } from '../models/Uf.js';
 import { Cidade } from '../models/Cidade.js';
+import { Hospital } from '../models/Hospital.js';
 import { TipoSanguineo } from '../models/TipoSanguineo.js';
 
 const sequelize = new Sequelize(databaseConfig);
 
 Uf.init(sequelize);
 Cidade.init(sequelize);
+Hospital.init(sequelize);
 TipoSanguineo.init(sequelize);
 
 Uf.associate(sequelize.models);
 Cidade.associate(sequelize.models);
+Hospital.associate(sequelize.models);
 TipoSanguineo.associate(sequelize.models);
 
 databaseInserts(); // comentar quando estiver em ambiente de produção (não criar tabelas e não inserir registros de teste)
@@ -64,6 +67,15 @@ function databaseInserts() {
                 descricao: 'Tipo Sanguíneo AB positivo'
             })
         ]);
+
+        const hospital1 = await Hospital.create({
+            nome: "Hospital Santa Casa",
+            sigla: "HSC",
+            telefone: "28999999999",
+            CNPJ: "12345678000199",
+            tipo: "FILANTRÓPICO",
+            cidadeId: 1,
+        });
     })();
 }
 

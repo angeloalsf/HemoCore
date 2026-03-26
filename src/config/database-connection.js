@@ -5,6 +5,7 @@ import { Uf } from '../models/Uf.js';
 import { Cidade } from '../models/Cidade.js';
 import { Hospital } from '../models/Hospital.js';
 import { TipoSanguineo } from '../models/TipoSanguineo.js';
+import { UnidadeColeta } from '../models/UnidadeColeta.js';
 
 const sequelize = new Sequelize(databaseConfig);
 
@@ -12,11 +13,13 @@ Uf.init(sequelize);
 Cidade.init(sequelize);
 Hospital.init(sequelize);
 TipoSanguineo.init(sequelize);
+UnidadeColeta.init(sequelize);
 
 Uf.associate(sequelize.models);
 Cidade.associate(sequelize.models);
 Hospital.associate(sequelize.models);
 TipoSanguineo.associate(sequelize.models);
+UnidadeColeta.associate(sequelize.models);
 
 databaseInserts(); // comentar quando estiver em ambiente de produção (não criar tabelas e não inserir registros de teste)
 
@@ -76,7 +79,14 @@ function databaseInserts() {
             tipo: "FILANTRÓPICO",
             cidadeId: 1,
         });
+        const unidadeColeta1 = await UnidadeColeta.create({
+            nome: "Unidade de Coleta 1",
+            tipo_unidade: "MÓVEL",
+            telefone: "28999999999",
+            cidadeId: 1
+        });
     })();
+    
 }
 
 export default sequelize;

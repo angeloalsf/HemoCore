@@ -30,11 +30,13 @@ class Hospital extends Model {
         },
         telefone: {
           type: DataTypes.STRING(20),
-          allowNull: true,
+          allowNull: false,
           validate: {
-            len: {
-              args: [8, 20],
-              msg: 'Telefone deve ter entre 8 e 20 caracteres',
+            notNull: { msg: 'Telefone é obrigatório' },
+            notEmpty: { msg: "Número do Telefone deve ser preenchido!" },
+            is: {
+                  args: /^\([0-9]{2}\) [0-9]?[0-9]{4}-[0-9]{4}/,
+                  msg: "Telefone deve seguir o padrão (NN) NNNNN-NNNN" 
             },
           },
         },
@@ -45,10 +47,10 @@ class Hospital extends Model {
           validate: {
             notNull: { msg: 'CNPJ é obrigatório' },
             notEmpty: { msg: 'CNPJ não pode ser vazio' },
-            len: {
-              args: [14, 18],
-              msg: 'CNPJ deve ter entre 14 e 18 caracteres',
-            },
+              is: {
+                    args: /^\d{14}$|^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/,
+                    msg: 'CNPJ inválido',
+            }
           },
         },
         tipo: {

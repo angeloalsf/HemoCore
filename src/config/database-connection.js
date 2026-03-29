@@ -7,6 +7,7 @@ import { Hospital } from '../models/Hospital.js';
 import { TipoSanguineo } from '../models/TipoSanguineo.js';
 import { UnidadeColeta } from '../models/UnidadeColeta.js';
 import { Doador } from '../models/Doador.js';
+import { Enfermeiro } from '../models/Enfermeiro.js';
 
 const sequelize = new Sequelize(databaseConfig);
 
@@ -14,6 +15,7 @@ Uf.init(sequelize);
 Cidade.init(sequelize);
 Hospital.init(sequelize);
 TipoSanguineo.init(sequelize);
+Enfermeiro.init(sequelize);
 UnidadeColeta.init(sequelize);
 Doador.init(sequelize);
 
@@ -21,6 +23,7 @@ Uf.associate(sequelize.models);
 Cidade.associate(sequelize.models);
 Hospital.associate(sequelize.models);
 TipoSanguineo.associate(sequelize.models);
+Enfermeiro.associate(sequelize.models);
 UnidadeColeta.associate(sequelize.models);
 Doador.associate(sequelize.models);
 
@@ -111,6 +114,15 @@ function databaseInserts() {
             cpf: "123.456.789-02",
             status: "PENDENTE",
             tipoSanguineoId: 1
+        });
+
+        const enfermeiro1 = await Enfermeiro.create({
+            nome: "João Silva",
+            telefone: "(28) 98888-7777",
+            cpf: "123.456.789-10",
+            especialidade: "Hemoterapia",
+            registroCoren: "COREN-ES 12345-ENF",
+            unidadeColetaId: 1
         });
 
     })();

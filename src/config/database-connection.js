@@ -74,15 +74,15 @@ function databaseInserts() {
         const hospital1 = await Hospital.create({
             nome: "Hospital Santa Casa",
             sigla: "HSC",
-            telefone: "28999999999",
-            CNPJ: "12345678000199",
+            telefone: "(28) 99999-9999",
+            CNPJ: "12.345.678/0001-95",
             tipo: "FILANTRÓPICO",
             cidadeId: 1,
         });
         const unidadeColeta1 = await UnidadeColeta.create({
             nome: "Unidade de Coleta 1",
             tipo_unidade: "MÓVEL",
-            telefone: "28999999999",
+            telefone: "(28) 99999-9999",
             cidadeId: 1
         });
     })();

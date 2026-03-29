@@ -6,6 +6,7 @@ import { Cidade } from '../models/Cidade.js';
 import { Hospital } from '../models/Hospital.js';
 import { TipoSanguineo } from '../models/TipoSanguineo.js';
 import { UnidadeColeta } from '../models/UnidadeColeta.js';
+import { Doador } from '../models/Doador.js';
 
 const sequelize = new Sequelize(databaseConfig);
 
@@ -14,12 +15,14 @@ Cidade.init(sequelize);
 Hospital.init(sequelize);
 TipoSanguineo.init(sequelize);
 UnidadeColeta.init(sequelize);
+Doador.init(sequelize);
 
 Uf.associate(sequelize.models);
 Cidade.associate(sequelize.models);
 Hospital.associate(sequelize.models);
 TipoSanguineo.associate(sequelize.models);
 UnidadeColeta.associate(sequelize.models);
+Doador.associate(sequelize.models);
 
 databaseInserts(); // comentar quando estiver em ambiente de produção (não criar tabelas e não inserir registros de teste)
 
@@ -85,6 +88,31 @@ function databaseInserts() {
             telefone: "(28) 99999-9999",
             cidadeId: 1
         });
+
+        const doador1 = await Doador.create({
+            nome: "Angelo",
+            telefone: "(28) 99999-9999",
+            cpf: "123.456.789-00",
+            status: "ATIVO",
+            tipoSanguineoId: 4
+        });
+
+        const doador2 = await Doador.create({
+            nome: "Caio",
+            telefone: "(28) 99999-9999",
+            cpf: "123.456.789-01",
+            status: "INATIVO",
+            tipoSanguineoId: 2
+        });
+
+        const doador3 = await Doador.create({
+            nome: "Gabriela ",
+            telefone: "(28) 99999-9999",
+            cpf: "123.456.789-02",
+            status: "PENDENTE",
+            tipoSanguineoId: 1
+        });
+
     })();
     
 }

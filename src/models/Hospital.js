@@ -100,16 +100,6 @@ class Hospital extends Model {
     //   onDelete: 'CASCADE',
     //   onUpdate: 'CASCADE',
     // });
-
-    // Hospital possui uma Recepcionista — 1:1
-    // Hospital.hasOne(models.Recepcionista, {
-    //   foreignKey: {
-    //     name: 'hospitalId',
-    //     allowNull: false,
-    //   },
-    //   onDelete: 'CASCADE',
-    //   onUpdate: 'CASCADE',
-    // });
   }
 }
 

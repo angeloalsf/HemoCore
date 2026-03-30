@@ -8,13 +8,13 @@ class Enfermeiro extends Model {
           type: DataTypes.STRING,
           allowNull: false,
           validate: {
-            notNull: { msg: 'Nome do Doador é obrigatório' },
+            notNull: { msg: 'Nome do Enfermeiro é obrigatório' },
             notEmpty: {
-              msg: "Nome do Doador deve ser preenchido!"
+              msg: "Nome do Enfermeiro deve ser preenchido!"
             },
             len: {
               args: [2, 50],
-              msg: "Nome do Doador deve ter entre 2 e 50 letras!"
+              msg: "Nome do Enfermeiro deve ter entre 2 e 50 letras!"
             }
           }
         },
@@ -23,9 +23,9 @@ class Enfermeiro extends Model {
           type: DataTypes.STRING,
           allowNull: false,
           validate: {
-            notNull: { msg: 'Telefone do Doador é obrigatório' },
+            notNull: { msg: 'Telefone do Enfermeiro é obrigatório' },
             notEmpty: {
-              msg: "Telefone do Doador deve ser preenchido!"
+              msg: "Telefone do Enfermeiro deve ser preenchido!"
             },
             is: {
               args: ["^\\(?\\d{2}\\)?\\s?\\d{4,5}\\-?\\d{4}$"],
@@ -39,13 +39,13 @@ class Enfermeiro extends Model {
           allowNull: false,
           unique: true,
           validate: {
-            notNull: { msg: 'CPF do Doador é obrigatório' },
+            notNull: { msg: 'CPF do Enfermeiro é obrigatório' },
             notEmpty: {
-              msg: "CPF do Doador deve ser preenchido!"
+              msg: "CPF do Enfermeiro deve ser preenchido!"
             },
             is: {
               args: ["[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}\\-[0-9]{2}"],
-              msg: "CPF do Doador deve seguir o padrão NNN.NNN.NNN-NN!"
+              msg: "CPF do Enfermeiro deve seguir o padrão NNN.NNN.NNN-NN!"
             }
           }
         },

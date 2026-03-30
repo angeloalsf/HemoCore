@@ -8,6 +8,7 @@ import { TipoSanguineo } from '../models/TipoSanguineo.js';
 import { UnidadeColeta } from '../models/UnidadeColeta.js';
 import { Doador } from '../models/Doador.js';
 import { Enfermeiro } from '../models/Enfermeiro.js';
+import { TecnicoLaboratorio } from '../models/TecnicoLaboratorio.js';
 
 const sequelize = new Sequelize(databaseConfig);
 
@@ -16,6 +17,7 @@ Cidade.init(sequelize);
 Hospital.init(sequelize);
 TipoSanguineo.init(sequelize);
 Enfermeiro.init(sequelize);
+TecnicoLaboratorio.init(sequelize);
 UnidadeColeta.init(sequelize);
 Doador.init(sequelize);
 
@@ -24,6 +26,7 @@ Cidade.associate(sequelize.models);
 Hospital.associate(sequelize.models);
 TipoSanguineo.associate(sequelize.models);
 Enfermeiro.associate(sequelize.models);
+TecnicoLaboratorio.associate(sequelize.models);
 UnidadeColeta.associate(sequelize.models);
 Doador.associate(sequelize.models);
 
@@ -122,6 +125,36 @@ function databaseInserts() {
             cpf: "123.456.789-10",
             especialidade: "Hemoterapia",
             registroCoren: "COREN-ES 12345-ENF",
+            unidadeColetaId: 1
+        });
+
+        const tecnico1 = await TecnicoLaboratorio.create({
+            nome: "Carlos Souza",
+            telefone: "(28) 97777-6666",
+            cpf: "123.456.789-55",
+            areaLab: "Análises Clínicas",
+            tipoConselho: null,
+            registroConselho: null,
+            unidadeColetaId: 1
+        });
+
+        const tecnico2 = await TecnicoLaboratorio.create({
+            nome: "Mariana Alves",
+            telefone: "(28) 96666-5555",
+            cpf: "123.456.789-56",
+            areaLab: "Biomedicina",
+            tipoConselho: "CRBM",
+            registroConselho: "CRBM-MG 123456",
+            unidadeColetaId: 1
+        });
+
+        const tecnico3 = await TecnicoLaboratorio.create({
+            nome: "Pedro Henrique",
+            telefone: "(28) 95555-4444",
+            cpf: "123.456.789-57",
+            areaLab: "Farmácia",
+            tipoConselho: "CRF",
+            registroConselho: "CRF-MG 654321",
             unidadeColetaId: 1
         });
 

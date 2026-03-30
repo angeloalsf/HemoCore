@@ -45,6 +45,11 @@ class UnidadeColeta extends Model {
             as: 'enfermeiros',
             foreignKey: 'unidadeColetaId'
         });
+
+        this.hasMany(models.tecnicoLaboratorio, {
+            as: 'tecnicos_laboratorio',
+            foreignKey: 'unidadeColetaId'
+        });
     }
 }
 

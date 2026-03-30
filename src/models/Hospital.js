@@ -79,18 +79,16 @@ class Hospital extends Model {
 
     static associate(models) {
         this.belongsTo(models.cidade, {
-            as: 'cidade',
-            foreignKey: {
+          as: 'cidade',
+          foreignKey: {
             name: 'cidadeId',
             allowNull: false,
             validate: {
-                notNull: {
-                msg: 'Cidade do Hospital deve ser preenchida!',
-                },
+              notNull: {
+              msg: 'Cidade do Hospital deve ser preenchida!',
+              },
             },
-            },
-            onDelete: 'RESTRICT',
-            onUpdate: 'CASCADE',
+          }
         });
 
     // Hospital possui muitas Solicitacoes — 1:N

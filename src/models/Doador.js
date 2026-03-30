@@ -92,10 +92,10 @@ class Doador extends Model {
     });
 
     // Doador → Doação (1:N)
-    // this.hasMany(models.doacao, {
-    //   as: 'doacoes',
-    //   foreignKey: 'doadorId'
-    // });
+    this.hasMany(models.doacao, {
+      as: 'doacoes',
+      foreignKey: 'doadorId'
+    });
   }
 }
 

@@ -21,7 +21,7 @@ class EnfermeiroService {
         cpf,
         especialidade,
         registroCoren,
-        unidadeColetaId
+        unidadeColeta
     } = req.body;
 
     const obj = await Enfermeiro.create({ 
@@ -31,7 +31,7 @@ class EnfermeiroService {
         cpf,
         especialidade,
         registroCoren,
-        unidadeColetaId
+        unidadeColetaId: unidadeColeta.id
     });
 
     return await Enfermeiro.findByPk(obj.id, { include: { all: true, nested: true } });

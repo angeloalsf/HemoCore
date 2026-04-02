@@ -10,6 +10,9 @@ import { Doador } from '../models/Doador.js';
 import { Enfermeiro } from '../models/Enfermeiro.js';
 import { TecnicoLaboratorio } from '../models/TecnicoLaboratorio.js';
 import { Doacao } from '../models/Doacao.js';
+import { Recepcionista } from '../models/Recepcionista.js';
+import { Solicitacao } from '../models/Solicitacao.js';
+import { ItemSolicitacao } from '../models/ItemSolicitacao.js';
 
 const sequelize = new Sequelize(databaseConfig);
 
@@ -22,6 +25,9 @@ TecnicoLaboratorio.init(sequelize);
 UnidadeColeta.init(sequelize);
 Doador.init(sequelize);
 Doacao.init(sequelize);
+Recepcionista.init(sequelize);
+Solicitacao.init(sequelize);
+ItemSolicitacao.init(sequelize);
 
 Uf.associate(sequelize.models);
 Cidade.associate(sequelize.models);
@@ -32,6 +38,9 @@ TecnicoLaboratorio.associate(sequelize.models);
 UnidadeColeta.associate(sequelize.models);
 Doador.associate(sequelize.models);
 Doacao.associate(sequelize.models);
+Recepcionista.associate(sequelize.models);
+Solicitacao.associate(sequelize.models);
+ItemSolicitacao.associate(sequelize.models);
 
 databaseInserts(); // comentar quando estiver em ambiente de produção (não criar tabelas e não inserir registros de teste)
 
@@ -169,6 +178,14 @@ function databaseInserts() {
             unidadeColetaId: 1
         });
 
+        const recepcionista1 = await Recepcionista.create({
+            nome: "Ana Maria Braga",
+            telefone: "(28) 99111-2222",
+            cpf: "123.456.789-99",
+            login: "anamaria",
+            senha: "password123",
+            cidadeId: 1
+        });
     })();
    
 }

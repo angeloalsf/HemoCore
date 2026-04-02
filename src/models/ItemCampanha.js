@@ -35,6 +35,7 @@ class ItemCampanha extends Model {
     }
 
     static associate(models) {
+        this.removeAttribute('id');
         this.belongsTo(models.tipoSanguineo, {
             as: 'tipoSanguineo',
             foreignKey: {

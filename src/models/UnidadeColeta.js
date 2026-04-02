@@ -41,6 +41,8 @@ class UnidadeColeta extends Model {
             }
         });
 
+        // PERGUNTAR AO VARGAS SE ESSE HASMANY É NECESSÁRIO
+        
         this.hasMany(models.campanha, {
             as: 'campanhas',
             foreignKey: 'unidadeColetaId'

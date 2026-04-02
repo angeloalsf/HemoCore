@@ -3,6 +3,7 @@ import express from "express";
 // import { UfController } from './controllers/UfController.js';
 // import { CidadeController } from './controllers/CidadeController.js';
 import { EnfermeiroController } from './controllers/EnfermeiroController.js';
+import { TecnicoLaboratorioController } from "./controllers/TecnicoLaboratorioController.js";
 
 const routes = express.Router();
 
@@ -24,5 +25,11 @@ routes.get('/enfermeiro/:id', EnfermeiroController.findByPk);
 routes.post('/enfermeiro', EnfermeiroController.create);
 routes.put('/enfermeiro/:id', EnfermeiroController.update);
 routes.delete('/enfermeiro/:id', EnfermeiroController.delete);
+
+routes.get('/tecnicoLaboratorio', TecnicoLaboratorioController.findAll);
+routes.get('/tecnicoLaboratorio/:id', TecnicoLaboratorioController.findByPk);
+routes.post('/tecnicoLaboratorio', TecnicoLaboratorioController.create);
+routes.put('/tecnicoLaboratorio/:id', TecnicoLaboratorioController.update);
+routes.delete('/tecnicoLaboratorio/:id', TecnicoLaboratorioController.delete);
 
 export default routes;

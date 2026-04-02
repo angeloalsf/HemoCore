@@ -20,30 +20,6 @@ class Campanha extends Model {
                     notEmpty: { msg: 'Data da campanha não pode ser vazia' },
                     isDate: { msg: 'Data deve ser uma data válida' }
                 }
-            },
-            metaColeta: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-                validate: {
-                    notNull: { msg: 'A meta de coleta é obrigatória' },
-                    notEmpty: { msg: 'A meta de coleta não pode ser vazia' },
-                    isInt: { msg: 'A meta de coleta deve ser um número inteiro' },
-                    min: {
-                        args: [1],
-                        msg: 'A meta de coleta deve ser maior que zero (em mL)',
-                    },
-                },
-            },
-            quantiaColetada: {
-                type: DataTypes.INTEGER,
-                allowNull: true,
-                validate: {
-                    isInt: { msg: 'Quantia coletada deve ser um número inteiro' },
-                    min: {
-                        args: [0],
-                        msg: 'Quantia coletada não pode ser negativa',
-                    },
-                }
             }
         }, { sequelize, modelName: 'campanha', tableName: 'campanhas' });
     }
@@ -62,17 +38,16 @@ class Campanha extends Model {
             }
         });
 
-        this.belongsTo(models.tipoSanguineo, {
-            as: 'tipoSanguineo',
-            foreignKey: {
-                name: 'tipoSanguineoId',
-                allowNull: false,
-                validate: {
-                    notNull: {
-                        msg: 'Tipo sanguíneo da campanha deve ser preenchido!'
-                    }
-                }
-            }
+
+        this.hasMany(models.itemCampanha, {
+            foreignKey: 'campanhaId',
+            as:
+            {
+                singular: 'itemCampanha',
+                plural: 'itensCampanha'
+            },
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
         });
     }
 }

@@ -92,14 +92,10 @@ class Hospital extends Model {
         });
 
     // Hospital possui muitas Solicitacoes — 1:N
-    // Hospital.hasMany(models.Solicitacao, {
-    //   foreignKey: {
-    //     name: 'hospitalId',
-    //     allowNull: false,
-    //   },
-    //   onDelete: 'CASCADE',
-    //   onUpdate: 'CASCADE',
-    // });
+    this.hasMany(models.solicitacao, {
+      as: 'solicitacoes',
+      foreignKey: 'hospitalId'
+    });
   }
 }
 

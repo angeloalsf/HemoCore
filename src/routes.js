@@ -26,10 +26,10 @@ routes.post('/enfermeiros', EnfermeiroController.create);
 routes.put('/enfermeiros/:id', EnfermeiroController.update);
 routes.delete('/enfermeiros/:id', EnfermeiroController.delete);
 
-routes.get('/tecnicoLaboratorio', TecnicoLaboratorioController.findAll);
-routes.get('/tecnicoLaboratorio/:id', TecnicoLaboratorioController.findByPk);
-routes.post('/tecnicoLaboratorio', TecnicoLaboratorioController.create);
-routes.put('/tecnicoLaboratorio/:id', TecnicoLaboratorioController.update);
-routes.delete('/tecnicoLaboratorio/:id', TecnicoLaboratorioController.delete);
+routes.get('/tecnicos-laboratorio', TecnicoLaboratorioController.findAll);
+routes.get('/tecnicos-laboratorio/:id', TecnicoLaboratorioController.findByPk);
+routes.post('/tecnicos-laboratorio', TecnicoLaboratorioController.create);
+routes.put('/tecnicos-laboratorio/:id', TecnicoLaboratorioController.update);
+routes.delete('/tecnicos-laboratorio/:id', TecnicoLaboratorioController.delete);
 
 export default routes;

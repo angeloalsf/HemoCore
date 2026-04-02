@@ -43,25 +43,25 @@ class UnidadeColeta extends Model {
 
         // PERGUNTAR AO VARGAS SE ESSE HASMANY É NECESSÁRIO
         
-        this.hasMany(models.campanha, {
-            as: 'campanhas',
-            foreignKey: 'unidadeColetaId'
-        });
+        // this.hasMany(models.campanha, {
+        //     as: 'campanhas',
+        //     foreignKey: 'unidadeColetaId'
+        // });
 
-        this.hasMany(models.doacao, {
-            as: 'doacoes',
-            foreignKey: 'unidadeColetaId'
-        });
+        // this.hasMany(models.doacao, {
+        //     as: 'doacoes',
+        //     foreignKey: 'unidadeColetaId'
+        // });
 
-        this.hasMany(models.enfermeiro, {
-            as: 'enfermeiros',
-            foreignKey: 'unidadeColetaId'
-        });
+        // this.hasMany(models.enfermeiro, {
+        //     as: 'enfermeiros',
+        //     foreignKey: 'unidadeColetaId'
+        // });
 
-        this.hasMany(models.tecnicoLaboratorio, {
-            as: 'tecnicos_laboratorio',
-            foreignKey: 'unidadeColetaId'
-        });
+        // this.hasMany(models.tecnicoLaboratorio, {
+        //     as: 'tecnicos_laboratorio',
+        //     foreignKey: 'unidadeColetaId'
+        // });
     }
 }
 

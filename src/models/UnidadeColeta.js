@@ -1,3 +1,5 @@
+// ALUNA: GABRIELA BENEVIDES
+
 import { Model, DataTypes } from 'sequelize';
 
 class UnidadeColeta extends Model {
@@ -41,7 +43,6 @@ class UnidadeColeta extends Model {
             }
         });
 
-        // PERGUNTAR AO VARGAS SE ESSE HASMANY É NECESSÁRIO
         
         // this.hasMany(models.campanha, {
         //     as: 'campanhas',

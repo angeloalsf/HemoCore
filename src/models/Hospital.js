@@ -1,3 +1,5 @@
+// ALUNO: ANGELO ANTONIO
+
 import { Model, DataTypes } from 'sequelize';
 
 class Hospital extends Model {

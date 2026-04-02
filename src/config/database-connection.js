@@ -14,6 +14,7 @@ import { Recepcionista } from '../models/Recepcionista.js';
 import { Solicitacao } from '../models/Solicitacao.js';
 import { ItemSolicitacao } from '../models/ItemSolicitacao.js';
 import { Campanha } from '../models/Campanha.js';
+import { ItemCampanha } from '../models/ItemCampanha.js';
 
 const sequelize = new Sequelize(databaseConfig);
 
@@ -30,6 +31,7 @@ Recepcionista.init(sequelize);
 Solicitacao.init(sequelize);
 ItemSolicitacao.init(sequelize);
 Campanha.init(sequelize);
+ItemCampanha.init(sequelize);
 
 Uf.associate(sequelize.models);
 Cidade.associate(sequelize.models);
@@ -44,6 +46,7 @@ Recepcionista.associate(sequelize.models);
 Solicitacao.associate(sequelize.models);
 ItemSolicitacao.associate(sequelize.models);
 Campanha.associate(sequelize.models);
+ItemCampanha.associate(sequelize.models);
 
 databaseInserts(); // comentar quando estiver em ambiente de produção (não criar tabelas e não inserir registros de teste)
 
@@ -215,19 +218,35 @@ function databaseInserts() {
             nome: "Campanha de Doação de Sangue - Abril Vermelho",
             data: "2026-04-15",
             metaColeta: 5000,
-            quantiaColetada: null,
-            unidadeColetaId: 1,
-            tipoSanguineoId: 4
         });
 
         const campanha2 = await Campanha.create({
             nome: "Campanha de Doação de Sangue - Maio Vermelho",
             data: "2026-03-26",
             metaColeta: 5000,
+        });
+
+        const itemCampanha1 = await ItemCampanha.create({
+            metaColeta: 5000,
+            quantiaColetada: 0,
+            campanhaId: 1,
+            tipoSanguineoId: 4
+        });
+
+        const itemCampanha2 = await ItemCampanha.create({
+            metaColeta: 5000,
             quantiaColetada: 10000,
-            unidadeColetaId: 1,
+            campanhaId: 2,
             tipoSanguineoId: 1
         });
+
+        const itemCampanha3 = await ItemCampanha.create({
+            metaColeta: 5000,
+            quantiaColetada: 5000,
+            campanhaId: 2,
+            tipoSanguineoId: 3
+        });
+
 
     })();
 

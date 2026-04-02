@@ -186,6 +186,27 @@ function databaseInserts() {
             senha: "password123",
             cidadeId: 1
         });
+
+        const solicitacao1 = await Solicitacao.create({
+            data: "2026-04-01",
+            status: "EM ABERTO",
+            urgencia: "ALTA",
+            observacao: "Paciente em estado crítico, necessita de transfusão urgente.",
+            hospitalId: 1
+        });
+
+        const itemSolicitacao1 = await ItemSolicitacao.create({
+            quantidade: 2,
+            solicitacaoId: 1,
+            tipoSanguineoId: 4 // O+
+        });
+
+        const itemSolicitacao2 = await ItemSolicitacao.create({
+            quantidade: 1,
+            solicitacaoId: 1,
+            tipoSanguineoId: 1 // A+
+        });
+
     })();
    
 }

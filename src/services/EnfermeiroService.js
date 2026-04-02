@@ -16,7 +16,6 @@ class EnfermeiroService {
   static async create(req) {
     const { 
         nome, 
-        imagem,
         telefone,
         cpf,
         especialidade,
@@ -26,7 +25,6 @@ class EnfermeiroService {
 
     const obj = await Enfermeiro.create({ 
         nome,
-        imagem,
         telefone,
         cpf,
         especialidade,

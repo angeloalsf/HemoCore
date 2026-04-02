@@ -45,10 +45,10 @@ class Cidade extends Model {
       }
     });
 
-    this.hasMany(models.unidadeColeta, {
-      as: 'unidades_coleta',
-      foreignKey: 'cidadeId'
-    });
+    // this.hasMany(models.unidadeColeta, {
+    //   as: 'unidades_coleta',
+    //   foreignKey: 'cidadeId'
+    // });
   }
 
 }

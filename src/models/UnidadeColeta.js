@@ -31,14 +31,24 @@ class UnidadeColeta extends Model {
         this.belongsTo(models.cidade, {
             as: 'cidade',
             foreignKey: {
-            name: 'cidadeId',
-            allowNull: false,
-            validate: {
-                notNull: {
-                msg: 'Cidade da Unidade de Coleta deve ser preenchida!'
+                name: 'cidadeId',
+                allowNull: false,
+                validate: {
+                    notNull: {
+                        msg: 'Cidade da Unidade de Coleta deve ser preenchida!'
+                    }
                 }
             }
-            }
+        });
+
+        this.hasMany(models.campanha, {
+            as: 'campanhas',
+            foreignKey: 'unidadeColetaId'
+        });
+
+        this.hasMany(models.doacao, {
+            as: 'doacoes',
+            foreignKey: 'unidadeColetaId'
         });
 
         this.hasMany(models.enfermeiro, {

@@ -1,3 +1,5 @@
+// ALUNO: CAIO TORRES
+
 import { Model, DataTypes } from 'sequelize';
 
 class TipoSanguineo extends Model {
@@ -28,8 +30,14 @@ class TipoSanguineo extends Model {
         }
       },
       descricao: {
-        type: DataTypes.STRING,
-        allowNull: true
+        type: DataTypes.STRING(500),
+        allowNull: true,
+        validate: {
+          len: {
+            args: [0, 500],
+            msg: 'Descrição deve ter no máximo 500 caracteres'
+          }
+        }
       }
     }, { sequelize, modelName: 'tipoSanguineo', tableName: 'tipos_sanguineos' })
   }

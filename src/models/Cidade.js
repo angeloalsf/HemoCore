@@ -1,11 +1,13 @@
+// ALUNA: GABRIELA BENEVIDES
+
 import { Model, DataTypes } from 'sequelize';
 
 class Cidade extends Model {
 
   static init(sequelize) {
     super.init({
-      nome: { 
-        type: DataTypes.STRING, 
+      nome: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: { msg: "Nome da Cidade deve ser preenchida!" },
@@ -32,9 +34,25 @@ class Cidade extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.uf, {as: 'uf', foreignKey: {name: 'ufId' , allowNull: false, validate: {notNull: {msg: 'Uf da Cidade deve ser preenchida!'}}}});
+    this.belongsTo(models.uf, {
+      as: 'uf',
+      foreignKey: {
+        name: 'ufId',
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Uf da Cidade deve ser preenchida!'
+          }
+        }
+      }
+    });
+
+    // this.hasMany(models.unidadeColeta, {
+    //   as: 'unidades_coleta',
+    //   foreignKey: 'cidadeId'
+    // });
   }
-  
+
 }
 
 export { Cidade };

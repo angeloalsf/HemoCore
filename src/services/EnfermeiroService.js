@@ -43,7 +43,7 @@ class EnfermeiroService {
     cpf,
     especialidade,
     registroCoren,
-    unidadeColetaId
+    unidadeColeta
     } = req.body;
 
     const obj = await Enfermeiro.findByPk(id, { include: { all: true, nested: true } });
@@ -55,7 +55,7 @@ class EnfermeiroService {
     cpf,
     especialidade,
     registroCoren,
-    unidadeColetaId
+    unidadeColetaId: unidadeColeta.id
     });
     await obj.save();
     return await Enfermeiro.findByPk(obj.id, { include: { all: true, nested: true } });

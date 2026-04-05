@@ -4,6 +4,7 @@ import express from "express";
 // import { CidadeController } from './controllers/CidadeController.js';
 import { EnfermeiroController } from './controllers/EnfermeiroController.js';
 import { TecnicoLaboratorioController } from "./controllers/TecnicoLaboratorioController.js";
+import { HospitalController } from "./controllers/HospitalController.js";
 
 const routes = express.Router();
 
@@ -19,6 +20,12 @@ const routes = express.Router();
 // routes.put('/cidades/:id', CidadeController.update);
 // routes.delete('/cidades/:id', CidadeController.delete);
 // routes.get('/cidades/findByUf/:id', CidadeController.findByUf);
+
+routes.get('/hospitais', HospitalController.findAll);
+routes.get('/hospitais/:id', HospitalController.findByPk);
+routes.post('/hospitais', HospitalController.create);
+routes.put('/hospitais/:id', HospitalController.update);
+routes.delete('/hospitais/:id', HospitalController.delete);
 
 routes.get('/enfermeiros', EnfermeiroController.findAll);
 routes.get('/enfermeiros/:id', EnfermeiroController.findByPk);

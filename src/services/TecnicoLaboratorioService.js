@@ -16,22 +16,22 @@ class TecnicoLaboratorioService {
   static async create(req) {
     const { 
         nome, 
-        imagem,
         telefone,
         cpf,
-        especialidade,
-        registroCoren,
-        unidadeColetaId
+        areaLab,
+        registroConselho,
+        tipoConselho,
+        unidadeColeta
     } = req.body;
 
     const obj = await TecnicoLaboratorio.create({ 
         nome,
-        imagem,
         telefone,
         cpf,
-        especialidade,
-        registroCoren,
-        unidadeColetaId
+        areaLab,
+        registroConselho,
+        tipoConselho,
+        unidadeColetaId: unidadeColeta.id
     });
 
     return await TecnicoLaboratorio.findByPk(obj.id, { include: { all: true, nested: true } });
@@ -43,9 +43,10 @@ class TecnicoLaboratorioService {
     nome, 
     telefone,
     cpf,
-    especialidade,
-    registroCoren,
-    unidadeColetaId
+    areaLab,
+    registroConselho,
+    tipoConselho,
+    unidadeColeta
     } = req.body;
 
     const obj = await TecnicoLaboratorio.findByPk(id, { include: { all: true, nested: true } });
@@ -55,9 +56,10 @@ class TecnicoLaboratorioService {
     nome,
     telefone,
     cpf,
-    especialidade,
-    registroCoren,
-    unidadeColetaId
+    areaLab,
+    registroConselho,
+    tipoConselho,
+    unidadeColetaId: unidadeColeta.id
     });
     await obj.save();
     return await TecnicoLaboratorio.findByPk(obj.id, { include: { all: true, nested: true } });

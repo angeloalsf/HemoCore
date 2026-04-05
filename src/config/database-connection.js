@@ -173,7 +173,8 @@ function databaseInserts() {
             telefone: "(28) 99999-9999",
             cpf: "123.456.789-00",
             status: "ATIVO",
-            tipoSanguineoId: 4
+            tipoSanguineoId: 4,
+            cidadeId: 1
         });
 
         const doador2 = await Doador.create({
@@ -181,7 +182,8 @@ function databaseInserts() {
             telefone: "(28) 99999-9999",
             cpf: "123.456.789-01",
             status: "INATIVO",
-            tipoSanguineoId: 2
+            tipoSanguineoId: 2,
+            cidadeId: 2
         });
 
         const doador3 = await Doador.create({
@@ -189,7 +191,8 @@ function databaseInserts() {
             telefone: "(28) 99999-9999",
             cpf: "123.456.789-02",
             status: "PENDENTE",
-            tipoSanguineoId: 1
+            tipoSanguineoId: 1,
+            cidadeId: 3
         });
 
         const doador4 = await Doador.create({
@@ -197,7 +200,8 @@ function databaseInserts() {
             telefone: "(28) 99999-9999",
             cpf: "123.456.789-03",
             status: "PENDENTE",
-            tipoSanguineoId: 5
+            tipoSanguineoId: 5,
+            cidadeId: 4
         });
 
 

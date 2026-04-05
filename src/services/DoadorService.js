@@ -1,0 +1,78 @@
+import { Doador } from "../models/Doador.js";
+
+class DoadorService {
+
+  static async findAll() {
+    const objs = await Doador.findAll({ include: { all: true, nested: true } });
+    return objs;
+  }
+
+  static async findByPk(req) {
+    const { id } = req.params;
+    const obj = await Doador.findByPk(id, { include: { all: true, nested: true } });
+    return obj;
+  }
+
+  static async create(req) {
+    const { 
+        nome, 
+        telefone,
+        cpf,
+        status,
+        tipoSanguineo,
+        cidade
+    } = req.body;
+
+    const obj = await Doador.create({ 
+        nome,
+        telefone,
+        cpf,
+        status,
+        tipoSanguineoId: tipoSanguineo.id,
+        cidadeId: cidade.id
+    });
+
+    return await Doador.findByPk(obj.id, { include: { all: true, nested: true } });
+    }
+
+  static async update(req) {
+    const { id } = req.params;
+    const { 
+    nome, 
+    telefone,
+    cpf,
+    status,
+    tipoSanguineo,
+    cidade
+    } = req.body;
+
+    const obj = await Doador.findByPk(id, { include: { all: true, nested: true } });
+
+    if (obj == null) throw 'Doador não encontrado!';
+    Object.assign(obj, { 
+    nome,
+    telefone,
+    cpf,
+    status,
+    tipoSanguineoId: tipoSanguineo.id,
+    cidadeId: cidade.id
+    });
+    await obj.save();
+    return await Doador.findByPk(obj.id, { include: { all: true, nested: true } });
+  }
+
+  static async delete(req) {
+    const { id } = req.params;
+    const obj = await Doador.findByPk(id);
+    if (obj == null) throw 'Doador não encontrado!';
+    try {
+      await obj.destroy();
+      return obj;
+    } catch (error) {
+      throw "Não é possível remover um Doador com participações em doações!";
+    }
+  }
+
+}
+
+export { DoadorService };

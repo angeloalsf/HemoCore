@@ -5,6 +5,7 @@ import express from "express";
 import { EnfermeiroController } from './controllers/EnfermeiroController.js';
 import { TecnicoLaboratorioController } from "./controllers/TecnicoLaboratorioController.js";
 import { HospitalController } from "./controllers/HospitalController.js";
+import { DoadorController } from "./controllers/DoadorController.js";
 
 const routes = express.Router();
 
@@ -38,5 +39,11 @@ routes.get('/tecnicos-laboratorio/:id', TecnicoLaboratorioController.findByPk);
 routes.post('/tecnicos-laboratorio', TecnicoLaboratorioController.create);
 routes.put('/tecnicos-laboratorio/:id', TecnicoLaboratorioController.update);
 routes.delete('/tecnicos-laboratorio/:id', TecnicoLaboratorioController.delete);
+
+routes.get('/doadores', DoadorController.findAll);
+routes.get('/doadores/:id', DoadorController.findByPk);
+routes.post('/doadores', DoadorController.create);
+routes.put('/doadores/:id', DoadorController.update);
+routes.delete('/doadores/:id', DoadorController.delete);
 
 export default routes;

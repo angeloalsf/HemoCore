@@ -235,7 +235,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3333/tecnicos-laboratorio/1",
+              "raw": "http://localhost:3333/tecnicos-laboratorio/5",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -243,7 +243,7 @@
               "port": "3333",
               "path": [
                 "tecnicos-laboratorio",
-                "1"
+                "5"
               ]
             }
           },
@@ -278,7 +278,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"nome\": \"Angelo\",\n    \"telefone\": \"(28) 98888-7778\",\n    \"cpf\": \"123.456.789-11\",\n    \"areaLab\": \"Farmácia\",\n    \"registroCoren\": \"COREN-ES 12346-ENF\",\n    \"unidadeColetaId\": 1\n}",
+              "raw": "{\n    \"nome\": \"Gabriela\",\n    \"telefone\": \"(28) 96666-5555\",\n    \"cpf\": \"123.456.789-59\",\n    \"areaLab\": \"Biomedicina\",\n    \"tipoConselho\": \"CRBM\",\n    \"registroConselho\": \"CRBM-MG 123457\",\n    \"unidadeColeta\": { \"id\": 1 }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -313,7 +313,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"nome\": \"Angelo\",\r\n    \"telefone\": \"(28) 98888-7778\",\r\n    \"cpf\": \"123.456.789-11\",\r\n    \"especialidade\": \"Hemoterapia\",\r\n    \"registroCoren\": \"COREN-ES 12346-ENF\",\r\n    \"unidadeColetaId\": 2\r\n}",
+              "raw": "{\r\n    \"nome\": \"Gabriela\",\r\n    \"telefone\": \"(28) 96666-5555\",\r\n    \"cpf\": \"123.456.789-59\",\r\n    \"areaLab\": \"Biomedicina\",\r\n    \"tipoConselho\": \"CRBM\",\r\n    \"registroConselho\": \"CRBM-MG 123457\",\r\n    \"unidadeColeta\": { \"id\": 2 }\r\n}",
               "options": {
                 "raw": {
                   "language": "text"
@@ -321,7 +321,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3333/tecnicos-laboratorio/1",
+              "raw": "http://localhost:3333/tecnicos-laboratorio/5",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -329,7 +329,7 @@
               "port": "3333",
               "path": [
                 "tecnicos-laboratorio",
-                "1"
+                "5"
               ]
             }
           },
@@ -341,7 +341,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:3333/tecnicos-laboratorio/1",
+              "raw": "http://localhost:3333/tecnicos-laboratorio/5",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -349,21 +349,13 @@
               "port": "3333",
               "path": [
                 "tecnicos-laboratorio",
-                "1"
+                "5"
               ]
             }
           },
           "response": []
         }
       ]
-    },
-    {
-      "name": "New Request",
-      "request": {
-        "method": "GET",
-        "header": []
-      },
-      "response": []
     }
   ]
 }

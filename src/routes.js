@@ -9,6 +9,7 @@ import { DoacaoController } from "./controllers/DoacaoController.js";
 import { UfController } from './controllers/UfController.js';
 import { RecepcionistaController } from './controllers/RecepcionistaController.js';
 import { TipoSanguineoController } from './controllers/TipoSanguineoController.js';
+import { SolicitacaoController } from "./controllers/SolicitacaoController.js";
 
 
 const routes = express.Router();
@@ -68,5 +69,12 @@ routes.get('/doacoes/:id', DoacaoController.findByPk);
 routes.post('/doacoes', DoacaoController.create);
 routes.put('/doacoes/:id', DoacaoController.update);
 routes.delete('/doacoes/:id', DoacaoController.delete);
+
+routes.get('/solicitacoes', SolicitacaoController.findAll);
+routes.get('/solicitacoes/:id', SolicitacaoController.findByPk);
+routes.post('/solicitacoes', SolicitacaoController.create);
+routes.put('/solicitacoes/:id', SolicitacaoController.update);
+routes.delete('/solicitacoes/:id', SolicitacaoController.delete);
+
 
 export default routes;

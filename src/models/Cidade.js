@@ -1,3 +1,5 @@
+// ALUNA: GABRIELA BENEVIDES
+
 import { Model, DataTypes } from 'sequelize';
 
 class Cidade extends Model {

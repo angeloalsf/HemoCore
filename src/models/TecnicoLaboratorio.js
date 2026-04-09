@@ -70,6 +70,7 @@ class TecnicoLaboratorio extends Model {
         registroConselho: {
           type: DataTypes.STRING,
           allowNull: true,
+          unique: true,
           validate: {
             isValido(value) {
               if (!value) return;

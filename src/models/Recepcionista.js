@@ -1,3 +1,5 @@
+// ALUNO: CAIO TORRES
+
 import { Model, DataTypes } from 'sequelize';
 
 class Recepcionista extends Model {

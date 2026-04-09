@@ -3,3 +3,6 @@ database.sqlite
 
 # Docker
 .dockerignore
+
+# Postman
+.postman/

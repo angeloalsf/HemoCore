@@ -1,3 +1,5 @@
+// ALUNO: ANGELO ANTONIO
+
 import { Model, DataTypes } from 'sequelize';
 
 class Doador extends Model {
@@ -91,11 +93,24 @@ class Doador extends Model {
       }
     });
 
+    this.belongsTo(models.cidade, {
+      as: 'cidade',
+      foreignKey: {
+        name: 'cidadeId',
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Cidade do Doador deve ser preenchida!'
+          }
+        }
+      }
+    });
+
     // Doador → Doação (1:N)
-    // this.hasMany(models.doacao, {
-    //   as: 'doacoes',
-    //   foreignKey: 'doadorId'
-    // });
+    this.hasMany(models.doacao, {
+      as: 'doacoes',
+      foreignKey: 'doadorId'
+    });
   }
 }
 

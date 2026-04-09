@@ -5,6 +5,7 @@ import { EnfermeiroController } from './controllers/EnfermeiroController.js';
 import { TecnicoLaboratorioController } from "./controllers/TecnicoLaboratorioController.js";
 import { HospitalController } from "./controllers/HospitalController.js";
 import { DoadorController } from "./controllers/DoadorController.js";
+import { DoacaoController } from "./controllers/DoacaoController.js";
 import { UfController } from './controllers/UfController.js';
 import { RecepcionistaController } from './controllers/RecepcionistaController.js';
 import { TipoSanguineoController } from './controllers/TipoSanguineoController.js';
@@ -61,5 +62,11 @@ routes.get('/doadores/:id', DoadorController.findByPk);
 routes.post('/doadores', DoadorController.create);
 routes.put('/doadores/:id', DoadorController.update);
 routes.delete('/doadores/:id', DoadorController.delete);
+
+routes.get('/doacoes', DoacaoController.findAll);
+routes.get('/doacoes/:id', DoacaoController.findByPk);
+routes.post('/doacoes', DoacaoController.create);
+routes.put('/doacoes/:id', DoacaoController.update);
+routes.delete('/doacoes/:id', DoacaoController.delete);
 
 export default routes;

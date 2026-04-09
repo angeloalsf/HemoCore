@@ -23,10 +23,13 @@ class Doacao extends Model {
             },
 
             isNotFuture(value) {
-              const hoje = new Date();
               const dataInformada = new Date(value);
 
-              // zera hora pra evitar erro de timezone
+              // 🔴 verifica se é inválida
+              if (isNaN(dataInformada.getTime())) return;
+
+              const hoje = new Date();
+
               hoje.setHours(0, 0, 0, 0);
               dataInformada.setHours(0, 0, 0, 0);
 

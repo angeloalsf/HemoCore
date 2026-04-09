@@ -31,7 +31,7 @@ class TecnicoLaboratorioService {
         areaLab,
         registroConselho,
         tipoConselho,
-        unidadeColetaId: unidadeColeta.id
+        unidadeColetaId: unidadeColeta?.id ?? null
     });
 
     return await TecnicoLaboratorio.findByPk(obj.id, { include: { all: true, nested: true } });
@@ -59,7 +59,7 @@ class TecnicoLaboratorioService {
     areaLab,
     registroConselho,
     tipoConselho,
-    unidadeColetaId: unidadeColeta.id
+    unidadeColetaId: unidadeColeta?.id ?? null
     });
     await obj.save();
     return await TecnicoLaboratorio.findByPk(obj.id, { include: { all: true, nested: true } });

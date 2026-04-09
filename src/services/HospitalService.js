@@ -29,7 +29,7 @@ class HospitalService {
         telefone,
         CNPJ,
         tipo,
-        cidadeId: cidade.id
+        cidadeId: cidade?.id ?? null
     });
 
     return await Hospital.findByPk(obj.id, { include: { all: true, nested: true } });
@@ -55,7 +55,7 @@ class HospitalService {
     telefone,
     CNPJ,
     tipo,
-    cidadeId: cidade.id
+    cidadeId: cidade?.id ?? null
     });
     await obj.save();
     return await Hospital.findByPk(obj.id, { include: { all: true, nested: true } });

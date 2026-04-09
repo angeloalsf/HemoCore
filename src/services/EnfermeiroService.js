@@ -29,7 +29,7 @@ class EnfermeiroService {
         cpf,
         especialidade,
         registroCoren,
-        unidadeColetaId: unidadeColeta.id
+        unidadeColetaId: unidadeColeta?.id ?? null
     });
 
     return await Enfermeiro.findByPk(obj.id, { include: { all: true, nested: true } });
@@ -55,7 +55,7 @@ class EnfermeiroService {
     cpf,
     especialidade,
     registroCoren,
-    unidadeColetaId: unidadeColeta.id
+    unidadeColetaId: unidadeColeta?.id ?? null
     });
     await obj.save();
     return await Enfermeiro.findByPk(obj.id, { include: { all: true, nested: true } });

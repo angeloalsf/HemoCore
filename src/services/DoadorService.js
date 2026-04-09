@@ -28,8 +28,8 @@ class DoadorService {
         telefone,
         cpf,
         status,
-        tipoSanguineoId: tipoSanguineo.id,
-        cidadeId: cidade.id
+        tipoSanguineoId: tipoSanguineo?.id ?? null,
+        cidadeId: cidade?.id ?? null
     });
 
     return await Doador.findByPk(obj.id, { include: { all: true, nested: true } });
@@ -54,8 +54,8 @@ class DoadorService {
     telefone,
     cpf,
     status,
-    tipoSanguineoId: tipoSanguineo.id,
-    cidadeId: cidade.id
+    tipoSanguineoId: tipoSanguineo?.id ?? null,
+    cidadeId: cidade?.id ?? null
     });
     await obj.save();
     return await Doador.findByPk(obj.id, { include: { all: true, nested: true } });

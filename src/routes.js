@@ -10,6 +10,7 @@ import { UfController } from './controllers/UfController.js';
 import { RecepcionistaController } from './controllers/RecepcionistaController.js';
 import { TipoSanguineoController } from './controllers/TipoSanguineoController.js';
 import { UnidadeColetaController } from "./controllers/UnidadeColetaController.js";
+import { CampanhaController } from "./controllers/CampanhaController.js";
 
 const routes = express.Router();
 
@@ -74,5 +75,11 @@ routes.get('/unidades-coleta/:id', UnidadeColetaController.findByPk);
 routes.post('/unidades-coleta', UnidadeColetaController.create);
 routes.put('/unidades-coleta/:id', UnidadeColetaController.update);
 routes.delete('/unidades-coleta/:id', UnidadeColetaController.delete);
+
+routes.get('/campanhas', CampanhaController.findAll);
+routes.get('/campanhas/:id', CampanhaController.findByPk);
+routes.post('/campanhas', CampanhaController.create);
+routes.put('/campanhas/:id', CampanhaController.update);
+routes.delete('/campanhas/:id', CampanhaController.delete); 
 
 export default routes;

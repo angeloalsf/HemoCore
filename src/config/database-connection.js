@@ -172,7 +172,7 @@ function databaseInserts() {
             nome: "Angelo",
             telefone: "(28) 99999-9999",
             cpf: "123.456.789-00",
-            status: "ATIVO",
+            status: "APTO",
             tipoSanguineoId: 4,
             cidadeId: 1
         });
@@ -181,7 +181,7 @@ function databaseInserts() {
             nome: "Caio",
             telefone: "(28) 99999-9999",
             cpf: "123.456.789-01",
-            status: "INATIVO",
+            status: "INAPTO",
             tipoSanguineoId: 2,
             cidadeId: 2
         });

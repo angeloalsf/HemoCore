@@ -1,6 +1,6 @@
 import express from "express";
 
-// import { CidadeController } from './controllers/CidadeController.js';
+import { CidadeController } from './controllers/CidadeController.js';
 import { EnfermeiroController } from './controllers/EnfermeiroController.js';
 import { TecnicoLaboratorioController } from "./controllers/TecnicoLaboratorioController.js";
 import { HospitalController } from "./controllers/HospitalController.js";
@@ -11,6 +11,8 @@ import { RecepcionistaController } from './controllers/RecepcionistaController.j
 import { TipoSanguineoController } from './controllers/TipoSanguineoController.js';
 import { SolicitacaoController } from "./controllers/SolicitacaoController.js";
 
+import { UnidadeColetaController } from "./controllers/UnidadeColetaController.js";
+import { CampanhaController } from "./controllers/CampanhaController.js";
 
 const routes = express.Router();
 
@@ -33,12 +35,12 @@ routes.post('/tipos-sanguineos', TipoSanguineoController.create);
 routes.put('/tipos-sanguineos/:id', TipoSanguineoController.update);
 routes.delete('/tipos-sanguineos/:id', TipoSanguineoController.delete);
 
-// routes.get('/cidades', CidadeController.findAll);
-// routes.get('/cidades/:id', CidadeController.findByPk);
-// routes.post('/cidades', CidadeController.create);
-// routes.put('/cidades/:id', CidadeController.update);
-// routes.delete('/cidades/:id', CidadeController.delete);
-// routes.get('/cidades/findByUf/:id', CidadeController.findByUf);
+routes.get('/cidades', CidadeController.findAll);
+routes.get('/cidades/:id', CidadeController.findByPk);
+routes.post('/cidades', CidadeController.create);
+routes.put('/cidades/:id', CidadeController.update);
+routes.delete('/cidades/:id', CidadeController.delete);
+routes.get('/cidades/findByUf/:id', CidadeController.findByUf);
 
 routes.get('/hospitais', HospitalController.findAll);
 routes.get('/hospitais/:id', HospitalController.findByPk);
@@ -76,5 +78,16 @@ routes.post('/solicitacoes', SolicitacaoController.create);
 routes.put('/solicitacoes/:id', SolicitacaoController.update);
 routes.delete('/solicitacoes/:id', SolicitacaoController.delete);
 
+routes.get('/unidades-coleta', UnidadeColetaController.findAll);
+routes.get('/unidades-coleta/:id', UnidadeColetaController.findByPk);
+routes.post('/unidades-coleta', UnidadeColetaController.create);
+routes.put('/unidades-coleta/:id', UnidadeColetaController.update);
+routes.delete('/unidades-coleta/:id', UnidadeColetaController.delete);
+
+routes.get('/campanhas', CampanhaController.findAll);
+routes.get('/campanhas/:id', CampanhaController.findByPk);
+routes.post('/campanhas', CampanhaController.create);
+routes.put('/campanhas/:id', CampanhaController.update);
+routes.delete('/campanhas/:id', CampanhaController.delete); 
 
 export default routes;

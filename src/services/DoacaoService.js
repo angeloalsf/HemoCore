@@ -95,17 +95,21 @@ class DoacaoService {
 
   static async delete(req) {
     const { id } = req.params;
-
     const obj = await Doacao.findByPk(id);
 
     if (obj == null) throw 'Doação não encontrada!';
 
+    const t = await sequelize.transaction();
+
     try {
-      await obj.destroy();
+      await obj.destroy({ transaction: t });
+
+      await t.commit();
+
       return obj;
     } catch (error) {
-        await t.rollback();
-        throw error;
+      await t.rollback();
+      throw error;
     }
   }
 

@@ -21,19 +21,26 @@ class CidadeService {
 
     static async create(req) {
         const { nome, area, habitantes, uf } = req.body;
-        if (uf == null) throw 'A Uf da Cidade deve ser preenchida!';
-        const obj = await Cidade.create({ nome, area, habitantes, ufId: uf.id });
+        const idUf = uf != null ? uf.id : null;
+
+        const obj = await Cidade.create({ nome, area, habitantes, ufId: idUf });
+
         return await Cidade.findByPk(obj.id, { include: { all: true, nested: true } });
     }
 
     static async update(req) {
         const { id } = req.params;
         const { nome, area, habitantes, uf } = req.body;
-        if (uf == null) throw 'A Uf da Cidade deve ser preenchida!';
+
+        const idUf = uf != null ? uf.id : null;
+
         const obj = await Cidade.findByPk(id, { include: { all: true, nested: true } });
         if (obj == null) throw 'Cidade não encontrada!';
-        Object.assign(obj, { nome, area, habitantes, ufId: uf.id });
+
+        Object.assign(obj, { nome, area, habitantes, ufId: idUf });
+
         await obj.save();
+
         return await Cidade.findByPk(obj.id, { include: { all: true, nested: true } });
     }
 

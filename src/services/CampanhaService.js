@@ -20,6 +20,30 @@ class CampanhaService {
     static async create(req) {
         const { nome, data, unidadeColeta, itensCampanha } = req.body;
 
+        const errosEncontrados = [];
+
+        const idUnidade = (unidadeColeta && unidadeColeta.id) ? unidadeColeta.id : null;
+
+        if (!itensCampanha || itensCampanha.length === 0) {
+            errosEncontrados.push({ path: 'itensCampanha', message: 'Os Itens da Campanha (metas de doação) devem ser preenchidos!' });
+        }
+
+        try {
+            const campanhaTemp = Campanha.build({ nome, data, unidadeColetaId: idUnidade });
+            await campanhaTemp.validate();
+        } catch (err) {
+            if (err.name === 'SequelizeValidationError') {
+                errosEncontrados.push(...err.errors);
+            }
+        }
+
+        if (errosEncontrados.length > 0) {
+            const erroPacote = new Error();
+            erroPacote.name = 'SequelizeValidationError';
+            erroPacote.errors = errosEncontrados;
+            throw erroPacote;
+        }
+
         if (await this.verificarRegrasDeNegocio(req)) {
             const t = await sequelize.transaction();
 
@@ -28,7 +52,6 @@ class CampanhaService {
                     { nome, data, unidadeColetaId: unidadeColeta.id },
                     { transaction: t }
                 );
-
 
                 await Promise.all(
                     itensCampanha.map(item =>
@@ -48,7 +71,8 @@ class CampanhaService {
 
             } catch (error) {
                 await t.rollback();
-                throw "Erro ao cadastrar a campanha e suas metas. Verifique os dados enviados!";
+                if (error.name === 'SequelizeValidationError') throw error;
+                throw "Erro ao processar a campanha no banco de dados!";
             }
         }
     }
@@ -56,6 +80,30 @@ class CampanhaService {
     static async update(req) {
         const { id } = req.params;
         const { nome, data, unidadeColeta, itensCampanha } = req.body;
+
+        const errosEncontrados = [];
+
+        const idUnidade = (unidadeColeta && unidadeColeta.id) ? unidadeColeta.id : null;
+
+        if (!itensCampanha || itensCampanha.length === 0) {
+            errosEncontrados.push({ path: 'itensCampanha', message: 'Os Itens da Campanha (metas de doação) devem ser preenchidos!' });
+        }
+
+        try {
+            const campanhaTemp = Campanha.build({ nome, data, unidadeColetaId: idUnidade });
+            await campanhaTemp.validate();
+        } catch (err) {
+            if (err.name === 'SequelizeValidationError') {
+                errosEncontrados.push(...err.errors);
+            }
+        }
+
+        if (errosEncontrados.length > 0) {
+            const erroPacote = new Error();
+            erroPacote.name = 'SequelizeValidationError';
+            erroPacote.errors = errosEncontrados;
+            throw erroPacote;
+        }
 
         const obj = await Campanha.findByPk(id, { include: { all: true, nested: true } });
         if (obj == null) throw 'Campanha não encontrada!';
@@ -114,8 +162,7 @@ class CampanhaService {
         // Regra de Negócio 1: A data da campanha não pode coincidir com outra já agendada para esta mesma Unidade de Coleta
         const { data, unidadeColeta } = req.body;
 
-        const idCampanhaAtual = req.params ? req.params.id : null;
-
+        const idCampanhaAtual = req.params && req.params.id ? parseInt(req.params.id) : null;
         if (!data || !unidadeColeta || !unidadeColeta.id) return true;
 
         const whereRegra2 = {

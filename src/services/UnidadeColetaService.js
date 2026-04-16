@@ -16,7 +16,10 @@ class UnidadeColetaService {
     static async create(req) {
         const { nome, tipo_unidade, telefone, cidade } = req.body;
 
-        const obj = await UnidadeColeta.create({ nome, tipo_unidade, telefone, cidadeId: cidade.id });
+        const idCidade = cidade != null ? cidade.id : null;
+
+        const obj = await UnidadeColeta.create({ nome, tipo_unidade, telefone, cidadeId: idCidade });
+
         return await UnidadeColeta.findByPk(obj.id, { include: { all: true, nested: true } });
     }
 
@@ -24,14 +27,19 @@ class UnidadeColetaService {
         const { id } = req.params;
         const { nome, tipo_unidade, telefone, cidade } = req.body;
 
-        const obj = await UnidadeColeta.findByPk(id, { include: { all: true, nested: true } });
+        const idCidade = cidade != null ? cidade.id : null;
 
+        const obj = await UnidadeColeta.findByPk(id, { include: { all: true, nested: true } });
         if (obj == null) throw 'Unidade de Coleta não encontrada!';
-        Object.assign(obj, { nome, tipo_unidade, telefone, cidadeId: cidade.id });
+
+        Object.assign(obj, { nome, tipo_unidade, telefone, cidadeId: idCidade });
+
         await obj.save();
-        return await UnidadeColeta.findByPk(id, { include: { all: true, nested: true } });
+
+        return await UnidadeColeta.findByPk(obj.id, { include: { all: true, nested: true } });
     }
 
+    
     static async delete(req) {
         const { id } = req.params;
         const obj = await UnidadeColeta.findByPk(id);

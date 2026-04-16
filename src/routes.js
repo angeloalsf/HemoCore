@@ -9,6 +9,8 @@ import { DoacaoController } from "./controllers/DoacaoController.js";
 import { UfController } from './controllers/UfController.js';
 import { RecepcionistaController } from './controllers/RecepcionistaController.js';
 import { TipoSanguineoController } from './controllers/TipoSanguineoController.js';
+import { SolicitacaoController } from "./controllers/SolicitacaoController.js";
+
 import { UnidadeColetaController } from "./controllers/UnidadeColetaController.js";
 import { CampanhaController } from "./controllers/CampanhaController.js";
 
@@ -69,6 +71,12 @@ routes.get('/doacoes/:id', DoacaoController.findByPk);
 routes.post('/doacoes', DoacaoController.create);
 routes.put('/doacoes/:id', DoacaoController.update);
 routes.delete('/doacoes/:id', DoacaoController.delete);
+
+routes.get('/solicitacoes', SolicitacaoController.findAll);
+routes.get('/solicitacoes/:id', SolicitacaoController.findByPk);
+routes.post('/solicitacoes', SolicitacaoController.create);
+routes.put('/solicitacoes/:id', SolicitacaoController.update);
+routes.delete('/solicitacoes/:id', SolicitacaoController.delete);
 
 routes.get('/unidades-coleta', UnidadeColetaController.findAll);
 routes.get('/unidades-coleta/:id', UnidadeColetaController.findByPk);

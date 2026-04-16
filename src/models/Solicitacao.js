@@ -21,8 +21,7 @@ class Solicitacao extends Model {
           type: DataTypes.ENUM(
             'EM ABERTO',
             'CANCELADA',
-            'FINALIZADA',
-            'CANCELADA'
+            'FINALIZADA'
           ),
           allowNull: false,
           defaultValue: 'EM ABERTO',

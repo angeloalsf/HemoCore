@@ -21,7 +21,6 @@ class CidadeService {
 
     static async create(req) {
         const { nome, area, habitantes, uf } = req.body;
-
         const idUf = uf != null ? uf.id : null;
 
         const obj = await Cidade.create({ nome, area, habitantes, ufId: idUf });

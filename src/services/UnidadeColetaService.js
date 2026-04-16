@@ -39,6 +39,7 @@ class UnidadeColetaService {
         return await UnidadeColeta.findByPk(obj.id, { include: { all: true, nested: true } });
     }
 
+    
     static async delete(req) {
         const { id } = req.params;
         const obj = await UnidadeColeta.findByPk(id);

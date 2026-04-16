@@ -14,12 +14,6 @@ class DoacaoController {
         .catch(next);
   }
 
-  static async findByTipoDeFilme(req, res, next) {
-    DoacaoService.findByTipoDeFilme(req)
-        .then(obj => res.json(obj))
-        .catch(next);
-  }
-
   static async create(req, res, next) {
     DoacaoService.create(req)
         .then(obj => res.json(obj))

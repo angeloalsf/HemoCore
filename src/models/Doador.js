@@ -54,8 +54,8 @@ class Doador extends Model {
 
         status: {
           type: DataTypes.ENUM(
-            'ATIVO',
-            'INATIVO',
+            'APTO',
+            'INAPTO',
             'PENDENTE'
           ),
           allowNull: false,
@@ -64,7 +64,7 @@ class Doador extends Model {
               msg: 'Status do Doador deve ser preenchido!'
             },
             isIn: {
-              args: [['ATIVO', 'INATIVO', 'PENDENTE']],
+              args: [['APTO', 'INAPTO', 'PENDENTE']],
               msg: 'Status do Doador deve ser um valor válido',
             },
           }

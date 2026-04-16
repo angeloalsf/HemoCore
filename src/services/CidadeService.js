@@ -21,30 +21,10 @@ class CidadeService {
 
     static async create(req) {
         const { nome, area, habitantes, uf } = req.body;
-        const errosEncontrados = [];
+        const idUf = uf != null ? uf.id : null;
 
-        const idUf = (uf && uf.id) ? uf.id : null;
-
-        if (!idUf) {
-            errosEncontrados.push({ path: 'ufId', message: 'A UF da Cidade deve ser preenchida no formato correto!' });
-        }
-
-        try {
-            const cidadeTemp = Cidade.build({ nome, area, habitantes, ufId: idUf });
-            await cidadeTemp.validate();
-        } catch (err) {
-            if (err.name === 'SequelizeValidationError') {
-                errosEncontrados.push(...err.errors);
-            }
-        }
-
-        if (errosEncontrados.length > 0) {
-            const erroPacote = new Error();
-            erroPacote.name = 'SequelizeValidationError';
-            erroPacote.errors = errosEncontrados;
-            throw erroPacote;
-        }
         const obj = await Cidade.create({ nome, area, habitantes, ufId: idUf });
+
         return await Cidade.findByPk(obj.id, { include: { all: true, nested: true } });
     }
 
@@ -52,28 +32,7 @@ class CidadeService {
         const { id } = req.params;
         const { nome, area, habitantes, uf } = req.body;
 
-        const errosEncontrados = [];
-        const idUf = (uf && uf.id) ? uf.id : null;
-
-        if (!idUf) {
-            errosEncontrados.push({ path: 'ufId', message: 'A UF da Cidade deve ser preenchida no formato correto!' });
-        }
-
-        try {
-            const cidadeTemp = Cidade.build({ nome, area, habitantes, ufId: idUf });
-            await cidadeTemp.validate();
-        } catch (err) {
-            if (err.name === 'SequelizeValidationError') {
-                errosEncontrados.push(...err.errors);
-            }
-        }
-
-        if (errosEncontrados.length > 0) {
-            const erroPacote = new Error();
-            erroPacote.name = 'SequelizeValidationError';
-            erroPacote.errors = errosEncontrados;
-            throw erroPacote;
-        }
+        const idUf = uf != null ? uf.id : null;
 
         const obj = await Cidade.findByPk(id, { include: { all: true, nested: true } });
         if (obj == null) throw 'Cidade não encontrada!';
@@ -81,6 +40,7 @@ class CidadeService {
         Object.assign(obj, { nome, area, habitantes, ufId: idUf });
 
         await obj.save();
+
         return await Cidade.findByPk(obj.id, { include: { all: true, nested: true } });
     }
 

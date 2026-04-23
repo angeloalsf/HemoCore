@@ -19,13 +19,17 @@ class CampanhaService {
 
     static async create(req) {
         const { nome, data, unidadeColeta, itensCampanha } = req.body;
+        const idUnidade = unidadeColeta != null ? unidadeColeta.id : null;
 
-        const errosEncontrados = [];
-
-        const idUnidade = (unidadeColeta && unidadeColeta.id) ? unidadeColeta.id : null;
+        const erroPacote = new Error();
+        erroPacote.name = 'SequelizeValidationError';
+        erroPacote.errors = [];
 
         if (!itensCampanha || itensCampanha.length === 0) {
-            errosEncontrados.push({ path: 'itensCampanha', message: 'Os Itens da Campanha (metas de doação) devem ser preenchidos!' });
+            erroPacote.errors.push({
+                path: 'itensCampanha',
+                message: 'Os Itens da Campanha (metas de doação) devem ser preenchidos!'
+            });
         }
 
         try {
@@ -33,14 +37,11 @@ class CampanhaService {
             await campanhaTemp.validate();
         } catch (err) {
             if (err.name === 'SequelizeValidationError') {
-                errosEncontrados.push(...err.errors);
+                erroPacote.errors.push(...err.errors);
             }
         }
 
-        if (errosEncontrados.length > 0) {
-            const erroPacote = new Error();
-            erroPacote.name = 'SequelizeValidationError';
-            erroPacote.errors = errosEncontrados;
+        if (erroPacote.errors.length > 0) {
             throw erroPacote;
         }
 
@@ -49,7 +50,7 @@ class CampanhaService {
 
             try {
                 const obj = await Campanha.create(
-                    { nome, data, unidadeColetaId: unidadeColeta.id },
+                    { nome, data, unidadeColetaId: idUnidade },
                     { transaction: t }
                 );
 
@@ -59,7 +60,7 @@ class CampanhaService {
                             {
                                 metaColeta: item.metaColeta,
                                 quantiaColetada: 0,
-                                tipoSanguineoId: item.tipoSanguineo.id
+                                tipoSanguineoId: item.tipoSanguineo ? item.tipoSanguineo.id : null
                             },
                             { transaction: t }
                         )
@@ -81,12 +82,17 @@ class CampanhaService {
         const { id } = req.params;
         const { nome, data, unidadeColeta, itensCampanha } = req.body;
 
-        const errosEncontrados = [];
+        const erroPacote = new Error();
+        erroPacote.name = 'SequelizeValidationError';
+        erroPacote.errors = [];
 
-        const idUnidade = (unidadeColeta && unidadeColeta.id) ? unidadeColeta.id : null;
+        const idUnidade = unidadeColeta != null ? unidadeColeta.id : null;
 
         if (!itensCampanha || itensCampanha.length === 0) {
-            errosEncontrados.push({ path: 'itensCampanha', message: 'Os Itens da Campanha (metas de doação) devem ser preenchidos!' });
+            erroPacote.errors.push({
+                path: 'itensCampanha',
+                message: 'Os Itens da Campanha (metas de doação) devem ser preenchidos!'
+            });
         }
 
         try {
@@ -94,14 +100,11 @@ class CampanhaService {
             await campanhaTemp.validate();
         } catch (err) {
             if (err.name === 'SequelizeValidationError') {
-                errosEncontrados.push(...err.errors);
+                erroPacote.errors.push(...err.errors);
             }
         }
 
-        if (errosEncontrados.length > 0) {
-            const erroPacote = new Error();
-            erroPacote.name = 'SequelizeValidationError';
-            erroPacote.errors = errosEncontrados;
+        if (erroPacote.errors.length > 0) {
             throw erroPacote;
         }
 
@@ -113,7 +116,7 @@ class CampanhaService {
         const t = await sequelize.transaction();
 
         try {
-            Object.assign(obj, { nome, data, unidadeColetaId: unidadeColeta.id });
+            Object.assign(obj, { nome, data, unidadeColetaId: idUnidade });
             await obj.save({ transaction: t });
 
             await ItemCampanha.destroy({
@@ -127,7 +130,7 @@ class CampanhaService {
                         {
                             metaColeta: item.metaColeta,
                             quantiaColetada: item.quantiaColetada || 0,
-                            tipoSanguineoId: item.tipoSanguineo.id
+                            tipoSanguineoId: item.tipoSanguineo ? item.tipoSanguineo.id : null
                         },
                         { transaction: t }
                     )
@@ -139,6 +142,7 @@ class CampanhaService {
 
         } catch (error) {
             await t.rollback();
+            if (error.name === 'SequelizeValidationError') throw error;
             throw "Erro ao atualizar a campanha. Verifique os dados enviados!";
         }
     }
@@ -175,6 +179,7 @@ class CampanhaService {
         if (conflitoUnidade) {
             throw "A data da campanha não pode coincidir com outra já agendada para esta mesma Unidade de Coleta!";
         }
+
 
 
         // Regra de Negócio 2: Não é permitido agendar mais de uma campanha na mesma cidade dentro de um período de 7 dias

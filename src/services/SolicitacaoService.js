@@ -2,6 +2,7 @@ import { Solicitacao } from '../models/Solicitacao.js';
 
 import sequelize from '../config/database-connection.js';
 import { QueryTypes } from 'sequelize';
+import { TipoSanguineo } from '../models/TipoSanguineo.js';
 
 class SolicitacaoService {
 
@@ -25,6 +26,9 @@ class SolicitacaoService {
 
       try {
         await Promise.all(itensSolicitacao.map(item => obj.createItemSolicitacao({ quantidade: item.quantidade, tipoSanguineoId: item.tipoSanguineo.id, solicitacaoId: obj.id }, { transaction: t }) ));
+
+        await this.reduzirEstoqueTipoSanguineo(itensSolicitacao, t);
+
         await t.commit();
 
         return await Solicitacao.findByPk(obj.id, { include: { all: true, nested: true } });
@@ -50,7 +54,10 @@ class SolicitacaoService {
 
     try {
       await Promise.all(obj.itensSolicitacao.map(item => item.destroy({ transaction: t }))); // destruindo todos itensSolicitacao desta solicitação
+      await this.aumentarEstoqueTipoSanguineo(obj.itensSolicitacao, t);
+
       await Promise.all(itensSolicitacao.map(item => obj.createItemSolicitacao({ quantidade: item.quantidade, tipoSanguineoId: item.tipoSanguineo.id, solicitacaoId: obj.id }, { transaction: t })));
+      await this.reduzirEstoqueTipoSanguineo(itensSolicitacao, t);
 
       await t.commit();
 
@@ -76,12 +83,64 @@ class SolicitacaoService {
     }
   }
 
-  // Implementando as regras de negócio relacionadas ao processo de negócio Empréstimo
-  // Regra de Negócio 1: Cliente não pode ter multas não pagas
-  // Regra de Negócio 2: Não podem ser emprestadas fitas reservadas para outros clientes
-  // Regra de Negócio 3: Não podem ser emprestadas fitas com status disponível false
+  static async reduzirEstoqueTipoSanguineo(item, t) {
+    await this.ajustarEstoqueTipoSanguineo(item, -item.quantidade, t);
+  }
+
+  static async aumentarEstoqueTipoSanguineo(item, t) {
+    await this.ajustarEstoqueTipoSanguineo(item, item.quantidade, t);
+  }
+
+
+  // Itera a lista de itens de solicitação e reduz a quantidade do tipo sanguíneo correspondente no banco de dados
+  static async ajustarEstoqueTipoSanguineo(itensSolicitacao, t) {
+    await Promise.all(
+      itensSolicitacao.map(item => this.ajustarEstoqueTipoSanguineoItem(item, t))
+    );
+  }
+
+  // Itera um item e reduz a quantidade do tipo sanguíneo correspondente no banco de dados
+  static async ajustarEstoqueTipoSanguineoItem(item, t) {
+    const { tipoSanguineo, quantidade } = item;
+    const tipoSanguineoFromBanco = await TipoSanguineo.findByPk(tipoSanguineo.id);
+
+    if (!tipoSanguineoFromBanco) throw `Tipo Sanguíneo não encontrado!`;
+
+    tipoSanguineoFromBanco.quantidade += quantidade;
+    await tipoSanguineoFromBanco.save({ transaction: t });
+  }
+
+  // Regra de Negócio 1: A solicitação somente poderá ser marcada como “Realizada” se houver quantidade suficiente do item solicitado em estoque no momento da efetivação.
+  // Regra de Negócio 2: Se já houver mais de 2 solicitações canceladas para um mesmo hospital num período de 7 dias para o mesmo tipo sanguíneo, o mesmo ganha prioridade no processo. 
   static async verificarRegrasDeNegocio(req) {
+    const { itensSolicitacao } = req.body;
+    
+    // Regra de Negócio 1: A solicitação somente poderá ser marcada como “Realizada” se houver quantidade suficiente do item solicitado em estoque no momento da efetivação
+    await this.validarEstoqueDosItens(itensSolicitacao);
+
     return true;
+  }
+
+  static async validarEstoqueDosItens(itensSolicitacao) {
+    await Promise.all(
+      itensSolicitacao.map(item => this.validarEstoque(item))
+    );
+  }
+
+  // Responsabilidade única: validar UM item
+  static async validarEstoque(item) {
+    const { tipoSanguineo, quantidade } = item;
+
+    const tipoSanguineoFromBanco = await TipoSanguineo.findByPk(tipoSanguineo.id);
+    console.log(`Validando estoque para o tipo sanguíneo ${tipoSanguineoFromBanco.getModelVerboso()}: disponível ${tipoSanguineoFromBanco.quantidade}, solicitado ${quantidade}.`);
+
+    if (!tipoSanguineoFromBanco) {
+      throw new Error(`Tipo sanguíneo ${tipoSanguineo.id} não encontrado`);
+    }
+
+    if (tipoSanguineoFromBanco.quantidade < quantidade) {
+      throw `Estoque insuficiente para o tipo sanguíneo ${tipoSanguineoFromBanco.getModelVerboso()}: disponível ${tipoSanguineoFromBanco.quantidade}, solicitado ${quantidade}.`;
+    }
   }
 
 }

@@ -28,7 +28,6 @@ class ItemSolicitacao extends Model {
   }
 
   static associate(models) {
-    this.removeAttribute('id');
     // Item de Solicitação pertence a uma Solicitação (N:1)
     this.belongsTo(models.solicitacao, {
       as: 'solicitacao',

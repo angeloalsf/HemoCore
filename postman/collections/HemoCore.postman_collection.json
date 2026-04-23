@@ -1,10 +1,9 @@
 {
   "info": {
-    "_postman_id": "ccef0327-7b81-4505-9bb9-590ceb7182fa",
+    "_postman_id": "eab98cc1-c529-4d87-b0e3-ab04474db43d",
     "name": "HemoCore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "53716368",
-    "_collection_link": "https://go.postman.co/collection/53716368-ccef0327-7b81-4505-9bb9-590ceb7182fa?source=collection_link"
+    "_exporter_id": "32308250"
   },
   "item": [
     {
@@ -1743,50 +1742,6 @@
       ]
     },
     {
-      "name": "Solicitacao",
-      "item": [
-        {
-          "name": "findAll",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3333/solicitacoes",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3333",
-              "path": [
-                "solicitacoes"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "findById",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3333/solicitacoes/2",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3333",
-              "path": [
-                "solicitacoes",
-                "2"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
       "name": "UF",
       "item": [
         {
@@ -2077,6 +2032,79 @@
               "path": [
                 "recepcionistas",
                 "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Solicitacao",
+      "item": [
+        {
+          "name": "findAll",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3333/solicitacoes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "solicitacoes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "findById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3333/solicitacoes/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "solicitacoes",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"data\": \"2026-04-16\",\r\n  \"status\": \"EM ABERTO\",\r\n  \"urgencia\": \"MÉDIA\",\r\n  \"observacao\": \"Solicitação urgente de bolsas de sangue\",\r\n  \"hospital\": {\"id\": 1},\r\n  \"itensSolicitacao\": [\r\n    {\r\n      \"quantidade\": 500,\r\n      \"tipoSanguineo\": {\"id\": 1}\r\n    },\r\n    {\r\n      \"quantidade\": 1000,\r\n      \"tipoSanguineo\": {\"id\": 3}\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/solicitacoes/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "solicitacoes",
+                ""
               ]
             }
           },

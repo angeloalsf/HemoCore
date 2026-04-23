@@ -44,6 +44,10 @@ class TipoSanguineo extends Model {
 
   static associate(models) {
   }
+
+  getModelVerboso() {
+    return `${this.grupoABO}${this.fatorRH ? '+' : '-'}`;
+  }
   
 }
 

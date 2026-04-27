@@ -1,5 +1,11 @@
 # HemoCore
 
+#### Integrantes da equipe de desenvolvimento do sistema HemoCore:
+
+- Angelo Antonio Lima Silveira Filho
+- Caio Torres Seares
+- Gabriela Benevides Pereira Marques
+
 ## 2. VISÃO GERAL DO PRODUTO/SERVIÇO
 
 É proposto o desenvolvimento de um Sistema de Controle de Doação de Sangue, que tem como objetivo informatizar e integrar todas as etapas do ciclo do sangue, desde o cadastro e agendamento do doador até a distribuição das bolsas para hospitais. O sistema visa garantir a segurança transfusional, a rastreabilidade completa das bolsas de sangue e um controle eficiente do estoque, reduzindo perdas por vencimento.

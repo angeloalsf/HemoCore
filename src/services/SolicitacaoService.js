@@ -1,7 +1,9 @@
 import { Solicitacao } from '../models/Solicitacao.js';
 import { TipoSanguineo } from '../models/TipoSanguineo.js';
+import { ItemSolicitacao } from '../models/ItemSolicitacao.js';
 import { TipoSanguineoService } from './TipoSanguineoService.js';
 import sequelize from '../config/database-connection.js';
+import { Op } from 'sequelize';
 
 class SolicitacaoService {
 
@@ -17,10 +19,10 @@ class SolicitacaoService {
   }
 
   static async create(req) {
-    const { data, status, urgencia, observacao, hospital, itensSolicitacao } = req.body;
-
     // Validação pré-transação para evitar rollbacks desnecessários
     await this.verificarRegrasDeNegocio(req);
+
+    const { data, status, urgencia, observacao, hospital, itensSolicitacao } = req.body;
 
     const t = await sequelize.transaction();
 
@@ -54,14 +56,15 @@ class SolicitacaoService {
   }
 
   static async update(req) {
+    // Adicionar futuramente uma forma de: Quando uma solicitação for "CANCELADA", o estoque dos itens vinculados deve ser devolvido
     const { id } = req.params;
-    const { data, status, urgencia, observacao, hospital, itensSolicitacao } = req.body;
-
     const obj = await Solicitacao.findByPk(id, { include: { all: true, nested: true } });
     if (obj == null) throw 'Solicitação não encontrada!';
 
     // Validação pré-transação
     await this.verificarRegrasDeNegocio(req);
+
+    const { data, status, urgencia, observacao, hospital, itensSolicitacao } = req.body;
 
     const t = await sequelize.transaction();
 
@@ -138,8 +141,51 @@ class SolicitacaoService {
     }
 
     // Regra de Negócio 2: Verificar histórico de solicitações canceladas para o hospital e tipo sanguíneo
+    await this.aplicarRegraPrioridade(req);
 
     return true;
+  }
+
+  static async aplicarRegraPrioridade(req) {
+    const { hospital, itensSolicitacao } = req.body;
+    const hospitalId = hospital.id;
+
+    // Calcula a data de 7 dias atrás
+    const seteDiasAtras = new Date();
+    seteDiasAtras.setDate(seteDiasAtras.getDate() - 7);
+    const dataFormatada = seteDiasAtras.toISOString().split('T')[0];
+
+    for (const item of itensSolicitacao) {
+      const tipoSanguineoId = item.tipoSanguineo.id;
+
+      const contagemCanceladas = await Solicitacao.count({
+        where: {
+          hospitalId,
+          status: 'CANCELADA',
+          data: {
+            [Op.gte]: dataFormatada
+          }
+        },
+        include: [{
+          model: ItemSolicitacao,
+          as: 'itensSolicitacao',
+          where: { tipoSanguineoId }
+        }]
+      });
+
+      if (contagemCanceladas > 2) {
+        req.body.urgencia = 'CRÍTICA';
+        
+        const aviso = `[SISTEMA]: Prioridade elevada para CRÍTICA devido ao histórico de cancelamentos recentes (${contagemCanceladas} solicitações) para este tipo sanguíneo nos últimos 7 dias. `;
+        
+        if (req.body.observacao) {
+          req.body.observacao = aviso + '\n\n' + req.body.observacao;
+        } else {
+          req.body.observacao = aviso.trim();
+        }
+        break; 
+      }
+    }
   }
 
   static async validarEstoque(item) {
@@ -151,7 +197,7 @@ class SolicitacaoService {
     }
 
     if (tipoSanguineoFromBanco.quantidade < quantidade) {
-      throw `Estoque insuficiente para o tipo sanguíneo ${tipoSanguineoFromBanco.getModelVerboso()}: disponível ${tipoSanguineoFromBanco.quantidade}, solicitado ${quantidade}.`;
+      throw `Estoque insuficiente para o tipo sanguíneo ${tipoSanguineoFromBanco.getModelVerboso()}: Estoque disponível ${tipoSanguineoFromBanco.quantidade}, quantia solicitada ${quantidade}.`;
     }
   }
 

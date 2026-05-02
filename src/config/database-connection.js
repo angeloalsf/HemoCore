@@ -464,6 +464,21 @@ function databaseInserts() {
             tipoSanguineoId: 3
         });
 
+        // Caio Torres - Regra de negócio 2:
+        for (let i = 1; i <= 3; i++) {
+            const s = await Solicitacao.create({
+                data: new Date().toISOString().split('T')[0],
+                status: 'CANCELADA',
+                urgencia: 'ALTA',
+                hospitalId: 3
+            });
+            await ItemSolicitacao.create({
+                quantidade: 1,
+                solicitacaoId: s.id,
+                tipoSanguineoId: 4
+            });
+        }
+
     })();
 
 }

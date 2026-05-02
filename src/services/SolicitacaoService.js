@@ -128,7 +128,7 @@ class SolicitacaoService {
   }
 
   // Regra de Negócio 1: A solicitação somente poderá ser marcada como “Realizada” se houver quantidade suficiente do item solicitado em estoque no momento da efetivação.
-  // Regra de Negócio 2: Se já houver mais de 2 solicitações canceladas para um mesmo hospital num período de 7 dias para o mesmo tipo sanguíneo, o mesmo ganha prioridade no processo. 
+  // Regra de Negócio 2: Se já houver 2 OU MAIS solicitações com urgência ALTA canceladas para um mesmo hospital num período de 7 DIAS para o mesmo TIPO SANGUÍNEO, o mesmo ganha prioridade no processo (urgência CRÍTICA). 
   static async verificarRegrasDeNegocio(req) {
     const { itensSolicitacao } = req.body;
     
@@ -163,6 +163,7 @@ class SolicitacaoService {
         where: {
           hospitalId,
           status: 'CANCELADA',
+          urgencia: 'ALTA',
           data: {
             [Op.gte]: dataFormatada
           }
@@ -174,7 +175,7 @@ class SolicitacaoService {
         }]
       });
 
-      if (contagemCanceladas > 2) {
+      if (contagemCanceladas >= 2) {
         req.body.urgencia = 'CRÍTICA';
         
         const aviso = `[SISTEMA]: Prioridade elevada para CRÍTICA devido ao histórico de cancelamentos recentes (${contagemCanceladas} solicitações) para este tipo sanguíneo nos últimos 7 dias. `;

@@ -51,7 +51,7 @@ class SolicitacaoService {
 
     } catch (error) {
       await t.rollback();
-      throw "Pelo menos um dos itens informados não foi encontrado!";
+      throw error;
     }
   }
 
@@ -79,18 +79,20 @@ class SolicitacaoService {
       Object.assign(obj, { data, status, urgencia, observacao, hospitalId: hospital.id });
       await obj.save({ transaction: t });
 
-      // 3. Criar novos itens e reduzir estoque
-      for (const itemNovo of itensSolicitacao) {
-        await obj.createItemSolicitacao(
-          { 
-            quantidade: itemNovo.quantidade, 
-            tipoSanguineoId: itemNovo.tipoSanguineo.id, 
-            solicitacaoId: obj.id 
-          }, 
-          { transaction: t }
-        );
+      // 3. Só cria novos itens e retira estoque se não for cancelamento
+      if (status !== 'CANCELADA') {
+        for (const itemNovo of itensSolicitacao) {
+          await obj.createItemSolicitacao(
+            {
+              quantidade: itemNovo.quantidade,
+              tipoSanguineoId: itemNovo.tipoSanguineo.id,
+              solicitacaoId: obj.id
+            },
+            { transaction: t }
+          );
 
-        await TipoSanguineoService.removerEstoque(itemNovo.tipoSanguineo.id, itemNovo.quantidade, t);
+          await TipoSanguineoService.removerEstoque(itemNovo.tipoSanguineo.id, itemNovo.quantidade, t);
+        }
       }
 
       await t.commit();
@@ -98,7 +100,7 @@ class SolicitacaoService {
 
     } catch (error) {
       await t.rollback();
-      throw "Pelo menos um dos itens informados não foi encontrado!";
+      throw error;
     }
   }
 
@@ -122,7 +124,7 @@ class SolicitacaoService {
       return obj;
     } catch (error) {
       await t.rollback();
-      throw "Não é possível remover uma solicitação que possui itens vinculados!";
+      throw error;
     }
   }
 

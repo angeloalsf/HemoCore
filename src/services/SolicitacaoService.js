@@ -1,8 +1,7 @@
 import { Solicitacao } from '../models/Solicitacao.js';
-
-import sequelize from '../config/database-connection.js';
-import { QueryTypes } from 'sequelize';
 import { TipoSanguineo } from '../models/TipoSanguineo.js';
+import { TipoSanguineoService } from './TipoSanguineoService.js';
+import sequelize from '../config/database-connection.js';
 
 class SolicitacaoService {
 
@@ -20,23 +19,37 @@ class SolicitacaoService {
   static async create(req) {
     const { data, status, urgencia, observacao, hospital, itensSolicitacao } = req.body;
 
-    if (await this.verificarRegrasDeNegocio(req)) {
-      const t = await sequelize.transaction();
-      const obj = await Solicitacao.create({ data, status, urgencia, observacao, hospitalId: hospital.id }, { transaction: t });
+    // Validação pré-transação para evitar rollbacks desnecessários
+    await this.verificarRegrasDeNegocio(req);
 
-      try {
-        await Promise.all(itensSolicitacao.map(item => obj.createItemSolicitacao({ quantidade: item.quantidade, tipoSanguineoId: item.tipoSanguineo.id, solicitacaoId: obj.id }, { transaction: t }) ));
+    const t = await sequelize.transaction();
 
-        await this.reduzirEstoqueTipoSanguineo(itensSolicitacao, t);
+    try {
+      const obj = await Solicitacao.create(
+        { data, status, urgencia, observacao, hospitalId: hospital.id },
+        { transaction: t }
+      );
 
-        await t.commit();
+      // Criar itens e reduzir estoque
+      for (const item of itensSolicitacao) {
+        await obj.createItemSolicitacao(
+          { 
+            quantidade: item.quantidade, 
+            tipoSanguineoId: item.tipoSanguineo.id, 
+            solicitacaoId: obj.id 
+          }, 
+          { transaction: t }
+        );
 
-        return await Solicitacao.findByPk(obj.id, { include: { all: true, nested: true } });
-
-      } catch (error) {
-        await t.rollback();
-        throw "Pelo menos um dos itens informados não foi encontrado!";
+        await TipoSanguineoService.removerEstoque(item.tipoSanguineo.id, item.quantidade, t);
       }
+
+      await t.commit();
+      return await Solicitacao.findByPk(obj.id, { include: { all: true, nested: true } });
+
+    } catch (error) {
+      await t.rollback();
+      throw "Pelo menos um dos itens informados não foi encontrado!";
     }
   }
 
@@ -45,22 +58,39 @@ class SolicitacaoService {
     const { data, status, urgencia, observacao, hospital, itensSolicitacao } = req.body;
 
     const obj = await Solicitacao.findByPk(id, { include: { all: true, nested: true } });
-
     if (obj == null) throw 'Solicitação não encontrada!';
 
+    // Validação pré-transação
+    await this.verificarRegrasDeNegocio(req);
+
     const t = await sequelize.transaction();
-    Object.assign(obj, { data, status, urgencia, observacao, hospitalId: hospital.id });
-    await obj.save({ transaction: t }); // Salvando os dados simples do objeto Solicitacao
 
     try {
-      await Promise.all(obj.itensSolicitacao.map(item => item.destroy({ transaction: t }))); // destruindo todos itensSolicitacao desta solicitação
-      await this.aumentarEstoqueTipoSanguineo(obj.itensSolicitacao, t);
+      // 1. Devolver estoque dos itens antigos e removê-los
+      for (const itemAntigo of obj.itensSolicitacao) {
+        await TipoSanguineoService.adicionarEstoque(itemAntigo.tipoSanguineoId, itemAntigo.quantidade, t);
+        await itemAntigo.destroy({ transaction: t });
+      }
 
-      await Promise.all(itensSolicitacao.map(item => obj.createItemSolicitacao({ quantidade: item.quantidade, tipoSanguineoId: item.tipoSanguineo.id, solicitacaoId: obj.id }, { transaction: t })));
-      await this.reduzirEstoqueTipoSanguineo(itensSolicitacao, t);
+      // 2. Atualizar dados da solicitação
+      Object.assign(obj, { data, status, urgencia, observacao, hospitalId: hospital.id });
+      await obj.save({ transaction: t });
+
+      // 3. Criar novos itens e reduzir estoque
+      for (const itemNovo of itensSolicitacao) {
+        await obj.createItemSolicitacao(
+          { 
+            quantidade: itemNovo.quantidade, 
+            tipoSanguineoId: itemNovo.tipoSanguineo.id, 
+            solicitacaoId: obj.id 
+          }, 
+          { transaction: t }
+        );
+
+        await TipoSanguineoService.removerEstoque(itemNovo.tipoSanguineo.id, itemNovo.quantidade, t);
+      }
 
       await t.commit();
-
       return await Solicitacao.findByPk(obj.id, { include: { all: true, nested: true } });
 
     } catch (error) {
@@ -71,43 +101,26 @@ class SolicitacaoService {
 
   static async delete(req) {
     const { id } = req.params;
-    const obj = await Solicitacao.findByPk(id);
+    const obj = await Solicitacao.findByPk(id, { include: { all: true, nested: true } });
 
     if (obj == null) throw 'Solicitação não encontrada!';
-    
+
+    const t = await sequelize.transaction();
+
     try {
-      await obj.destroy();
+      // Devolver estoque antes de deletar
+      for (const item of obj.itensSolicitacao) {
+        await TipoSanguineoService.adicionarEstoque(item.tipoSanguineoId, item.quantidade, t);
+        await item.destroy({ transaction: t });
+      }
+
+      await obj.destroy({ transaction: t });
+      await t.commit();
       return obj;
     } catch (error) {
+      await t.rollback();
       throw "Não é possível remover uma solicitação que possui itens vinculados!";
     }
-  }
-
-  static async reduzirEstoqueTipoSanguineo(item, t) {
-    await this.ajustarEstoqueTipoSanguineo(item, -item.quantidade, t);
-  }
-
-  static async aumentarEstoqueTipoSanguineo(item, t) {
-    await this.ajustarEstoqueTipoSanguineo(item, item.quantidade, t);
-  }
-
-
-  // Itera a lista de itens de solicitação e reduz a quantidade do tipo sanguíneo correspondente no banco de dados
-  static async ajustarEstoqueTipoSanguineo(itensSolicitacao, t) {
-    await Promise.all(
-      itensSolicitacao.map(item => this.ajustarEstoqueTipoSanguineoItem(item, t))
-    );
-  }
-
-  // Itera um item e reduz a quantidade do tipo sanguíneo correspondente no banco de dados
-  static async ajustarEstoqueTipoSanguineoItem(item, t) {
-    const { tipoSanguineo, quantidade } = item;
-    const tipoSanguineoFromBanco = await TipoSanguineo.findByPk(tipoSanguineo.id);
-
-    if (!tipoSanguineoFromBanco) throw `Tipo Sanguíneo não encontrado!`;
-
-    tipoSanguineoFromBanco.quantidade += quantidade;
-    await tipoSanguineoFromBanco.save({ transaction: t });
   }
 
   // Regra de Negócio 1: A solicitação somente poderá ser marcada como “Realizada” se houver quantidade suficiente do item solicitado em estoque no momento da efetivação.
@@ -115,27 +128,26 @@ class SolicitacaoService {
   static async verificarRegrasDeNegocio(req) {
     const { itensSolicitacao } = req.body;
     
-    // Regra de Negócio 1: A solicitação somente poderá ser marcada como “Realizada” se houver quantidade suficiente do item solicitado em estoque no momento da efetivação
-    await this.validarEstoqueDosItens(itensSolicitacao);
+    if (!itensSolicitacao || itensSolicitacao.length === 0) {
+      throw "A solicitação deve conter pelo menos um item!";
+    }
+
+    // Regra de Negócio 1: Validar estoque para cada item da solicitação
+    for (const item of itensSolicitacao) {
+      await this.validarEstoque(item);
+    }
+
+    // Regra de Negócio 2: Verificar histórico de solicitações canceladas para o hospital e tipo sanguíneo
 
     return true;
   }
 
-  static async validarEstoqueDosItens(itensSolicitacao) {
-    await Promise.all(
-      itensSolicitacao.map(item => this.validarEstoque(item))
-    );
-  }
-
-  // Responsabilidade única: validar UM item
   static async validarEstoque(item) {
     const { tipoSanguineo, quantidade } = item;
-
     const tipoSanguineoFromBanco = await TipoSanguineo.findByPk(tipoSanguineo.id);
-    console.log(`Validando estoque para o tipo sanguíneo ${tipoSanguineoFromBanco.getModelVerboso()}: disponível ${tipoSanguineoFromBanco.quantidade}, solicitado ${quantidade}.`);
 
     if (!tipoSanguineoFromBanco) {
-      throw new Error(`Tipo sanguíneo ${tipoSanguineo.id} não encontrado`);
+      throw `Tipo sanguíneo ID ${tipoSanguineo.id} não encontrado!`;
     }
 
     if (tipoSanguineoFromBanco.quantidade < quantidade) {

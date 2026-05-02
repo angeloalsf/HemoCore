@@ -56,7 +56,6 @@ class SolicitacaoService {
   }
 
   static async update(req) {
-    // Adicionar futuramente uma forma de: Quando uma solicitação for "CANCELADA", o estoque dos itens vinculados deve ser devolvido
     const { id } = req.params;
     const obj = await Solicitacao.findByPk(id, { include: { all: true, nested: true } });
     if (obj == null) throw 'Solicitação não encontrada!';

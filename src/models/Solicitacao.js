@@ -38,14 +38,16 @@ class Solicitacao extends Model {
           type: DataTypes.ENUM(
             'BAIXA',
             'MÉDIA',
-            'ALTA'
+            'ALTA',
+            'CRÍTICA' // UTILIZADA APENAS PARA SOLICITAÇÕES COM PRIORIDADE ELEVADA PELA REGRA DE NEGÓCIO 2, 
+                      // NÃO DEVE SER DEFINIDA MANUALMENTE PELO USUÁRIO
           ),
           allowNull: false,
           defaultValue: 'BAIXA',
           validate: {
             notNull: { msg: 'Urgência da solicitação é obrigatória' },
             isIn: {
-              args: [['BAIXA', 'MÉDIA', 'ALTA']],
+              args: [['BAIXA', 'MÉDIA', 'ALTA', 'CRÍTICA']],
               msg: 'Urgência da solicitação deve ser um valor válido'
             }
           }

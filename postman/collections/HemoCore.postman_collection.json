@@ -1,9 +1,9 @@
 {
   "info": {
-    "_postman_id": "eab98cc1-c529-4d87-b0e3-ab04474db43d",
+    "_postman_id": "7e5b8bdf-ee60-4587-a7e0-e26104239266",
     "name": "HemoCore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "32308250"
+    "_exporter_id": "53898713"
   },
   "item": [
     {
@@ -1563,13 +1563,41 @@
           "response": []
         },
         {
-          "name": "Insert Campanha (Validando Regras de Negócio)",
+          "name": "Insert Campanha (Regra de Negócio 01)",
           "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"nome\": \"Campanha Invasora\",\r\n    \"data\": \"2026-04-15\",\r\n    //\"data\": \"2026-05-05\",\r\n    \"unidadeColeta\": {\r\n        \"id\": 1\r\n    },\r\n    \"itensCampanha\": [\r\n        {\r\n            \"metaColeta\": 1000,\r\n            \"tipoSanguineo\": {\r\n                \"id\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
+              "raw": "{\r\n    \"nome\": \"Campanha Invasora\",\r\n    \"data\": \"2026-04-15\",\r\n    \"unidadeColeta\": {\r\n        \"id\": 1\r\n    },\r\n    \"itensCampanha\": [\r\n        {\r\n            \"metaColeta\": 1000,\r\n            \"tipoSanguineo\": {\r\n                \"id\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/campanhas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "campanhas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Insert Campanha (Regra de Negócio 02)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nome\": \"Campanha Invasora\",\r\n    \"data\": \"2026-05-05\",\r\n    \"unidadeColeta\": {\r\n        \"id\": 1\r\n    },\r\n    \"itensCampanha\": [\r\n        {\r\n            \"metaColeta\": 1000,\r\n            \"tipoSanguineo\": {\r\n                \"id\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"

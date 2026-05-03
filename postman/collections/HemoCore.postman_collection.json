@@ -1,9 +1,10 @@
 {
   "info": {
-    "_postman_id": "2083f908-03a1-4484-82c3-51c88b5e1d6b",
+    "_postman_id": "cf99d817-df25-4311-b5c8-6b98cf2a9d04",
     "name": "HemoCore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "32308250"
+    "_exporter_id": "53743891",
+    "_collection_link": "https://go.postman.co/collection/53743891-cf99d817-df25-4311-b5c8-6b98cf2a9d04?source=collection_link"
   },
   "item": [
     {
@@ -154,6 +155,108 @@
             "body": {
               "mode": "raw",
               "raw": "{\n    \"data\": \"2030-99-99\",\n    \"quantia\": 450,\n    \"doador\": {},\n    \"enfermeiro\": {},\n    \"unidadeColeta\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/doacoes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "doacoes"
+              ]
+            },
+            "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "Insert Doacoes - 1º Regra de Negócio",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful POST request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"data\": \"2026-01-28\",\n    \"quantia\": 450,\n    \"doador\": { \"id\": 1 },\n    \"enfermeiro\": { \"id\": 2 },\n    \"unidadeColeta\": { \"id\": 1 }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/doacoes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "doacoes"
+              ]
+            },
+            "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "Insert Doacoes - 2º Regra de Negócio",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful POST request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"data\": \"2026-07-28\",\n    \"quantia\": 450,\n    \"doador\": { \"id\": 4 },\n    \"enfermeiro\": { \"id\": 2 },\n    \"unidadeColeta\": { \"id\": 1 }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -351,6 +454,57 @@
           "response": []
         },
         {
+          "name": "Insert Enfermeiros - Erros",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful POST request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nome\": \"\",\n    \"telefone\": \"123\",\n    \"cpf\": \"111\",\n    \"especialidade\": \"\",\n    \"registroCoren\": \"abc\",\n    \"unidadeColeta\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/enfermeiros",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "enfermeiros"
+              ]
+            },
+            "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+          },
+          "response": []
+        },
+        {
           "name": "Update Enfermeiros",
           "request": {
             "method": "PUT",
@@ -504,6 +658,57 @@
             "body": {
               "mode": "raw",
               "raw": "{\n    \"nome\": \"Gabriela\",\n    \"telefone\": \"(28) 96666-5555\",\n    \"cpf\": \"123.456.789-59\",\n    \"areaLab\": \"Biomedicina\",\n    \"tipoConselho\": \"CRBM\",\n    \"registroConselho\": \"CRBM-MG 123457\",\n    \"unidadeColeta\": { \"id\": 1 }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/tecnicos-laboratorio",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "tecnicos-laboratorio"
+              ]
+            },
+            "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "Insert TecnicosLaboratorio - Erros",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful POST request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"A\",\n  \"telefone\": \"999\",\n  \"cpf\": \"123\",\n  \"areaLab\": \"X\",\n  \"tipoConselho\": \"CRBM\",\n  \"registroConselho\": \"CRM-MG 1234\",\n  \"unidadeColeta\": null\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -701,6 +906,57 @@
           "response": []
         },
         {
+          "name": "Insert Hospitais - Erros",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful POST request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nome\": \"\",\n    \"sigla\": \"\",\n    \"telefone\": \"123\",\n    \"CNPJ\": \"111\",\n    \"tipo\": \"ABC\",\n    \"cidade\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/hospitais",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "hospitais"
+              ]
+            },
+            "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+          },
+          "response": []
+        },
+        {
           "name": "Update Hospitais",
           "request": {
             "method": "PUT",
@@ -810,7 +1066,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3333/doadores/3",
+              "raw": "http://localhost:3333/doadores/4",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -818,7 +1074,7 @@
               "port": "3333",
               "path": [
                 "doadores",
-                "3"
+                "4"
               ]
             }
           },
@@ -853,7 +1109,58 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"nome\": \"Gabriela\",\n    \"telefone\": \"(28) 99999-9999\",\n    \"cpf\": \"143.456.739-03\",\n    \"status\": \"PENDENTE\",\n    \"tipoSanguineo\": { \"id\": 4 },\n    \"cidade\": { \"id\": 1 }\n}",
+              "raw": "{\n    \"nome\": \"Rafaela\",\n    \"sexo\": \"M\",\n    \"telefone\": \"(28) 99999-9999\",\n    \"cpf\": \"143.456.739-03\",\n    \"status\": \"PENDENTE\",\n    \"tipoSanguineo\": { \"id\": 4 },\n    \"cidade\": { \"id\": 1 }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/doadores",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "doadores"
+              ]
+            },
+            "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "Insert Doadores - Erros",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful POST request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"\",\n  \"sexo\": {},\n  \"telefone\": \"123\",\n  \"cpf\": \"111\",\n  \"status\": \"ABC\",\n  \"tipoSanguineo\": {},\n  \"cidade\": null\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2275,6 +2582,57 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Insert Doacoes - Erros",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"data\": \"2030-99-99\",\n    \"quantia\": 450,\n    \"doador\": {},\n    \"enfermeiro\": {},\n    \"unidadeColeta\": {}\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3333/doacoes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3333",
+          "path": [
+            "doacoes"
+          ]
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+      },
+      "response": []
     }
   ]
 }

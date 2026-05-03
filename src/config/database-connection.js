@@ -170,6 +170,7 @@ function databaseInserts() {
 
         const doador1 = await Doador.create({
             nome: "Angelo",
+            sexo: "M",
             telefone: "(28) 99999-9999",
             cpf: "123.456.789-00",
             status: "APTO",
@@ -179,6 +180,7 @@ function databaseInserts() {
 
         const doador2 = await Doador.create({
             nome: "Caio",
+            sexo: "M",
             telefone: "(28) 99999-9999",
             cpf: "123.456.789-01",
             status: "INAPTO",
@@ -188,6 +190,7 @@ function databaseInserts() {
 
         const doador3 = await Doador.create({
             nome: "Gabriela ",
+            sexo: "F",
             telefone: "(28) 99999-9999",
             cpf: "123.456.789-02",
             status: "PENDENTE",
@@ -196,10 +199,11 @@ function databaseInserts() {
         });
 
         const doador4 = await Doador.create({
-            nome: "Linux",
+            nome: "Rafael",
+            sexo: "M",
             telefone: "(28) 99999-9999",
             cpf: "123.456.789-03",
-            status: "PENDENTE",
+            status: "APTO",
             tipoSanguineoId: 5,
             cidadeId: 4
         });
@@ -284,7 +288,7 @@ function databaseInserts() {
 
 
         const doacao1 = await Doacao.create({
-            data: "2026-03-29",
+            data: "2026-01-01",
             quantia: 450,
             doadorId: 1,
             enfermeiroId: 1,
@@ -308,10 +312,27 @@ function databaseInserts() {
         });
 
         const doacao4 = await Doacao.create({
-            data: "2026-03-02",
+            data: "2026-01-02",
             quantia: 500,
             doadorId: 4,
             enfermeiroId: 4,
+            unidadeColetaId: 3
+        });
+
+        const doacao5 = await Doacao.create({
+            data: "2026-04-02",
+            quantia: 500,
+            doadorId: 4,
+            enfermeiroId: 1,
+            unidadeColetaId: 2
+        });
+
+
+        const doacao6 = await Doacao.create({
+            data: "2026-07-02",
+            quantia: 500,
+            doadorId: 4,
+            enfermeiroId: 2,
             unidadeColetaId: 3
         });
 

@@ -1,10 +1,9 @@
 {
   "info": {
-    "_postman_id": "cf99d817-df25-4311-b5c8-6b98cf2a9d04",
+    "_postman_id": "63be918e-7061-4c42-be10-284a2c3c4dd0",
     "name": "HemoCore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "53743891",
-    "_collection_link": "https://go.postman.co/collection/53743891-cf99d817-df25-4311-b5c8-6b98cf2a9d04?source=collection_link"
+    "_exporter_id": "53898713"
   },
   "item": [
     {
@@ -1842,13 +1841,13 @@
           "response": []
         },
         {
-          "name": "Insert Campanha (Validando Campos Inválidos)",
+          "name": "Insert Campanha (Campos Inválidos)",
           "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"nome\": \"A\",\r\n    \"data\": \"data-invalida\",\r\n    \"unidadeColeta\": {\r\n        \"id\": null\r\n    },\r\n    \"itensCampanha\": [\r\n        // {\r\n        //     \"metaColeta\": 1000,\r\n        //     \"tipoSanguineo\": {\r\n        //         \"id\": 1\r\n        //     }\r\n        // }\r\n    ]\r\n}",
+              "raw": "{\r\n    \"nome\": \"A\",\r\n    \"data\": \"data-invalida\",\r\n    \"unidadeColeta\": {\r\n        \"id\": null\r\n    },\r\n    \"itensCampanha\": [\r\n        {\r\n            \"metaColeta\": 1000,\r\n            \"tipoSanguineo\": {\r\n                \"id\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1876,7 +1875,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"nome\": \"Campanha Invasora\",\r\n    \"data\": \"2026-04-15\",\r\n    \"unidadeColeta\": {\r\n        \"id\": 1\r\n    },\r\n    \"itensCampanha\": [\r\n        {\r\n            \"metaColeta\": 1000,\r\n            \"tipoSanguineo\": {\r\n                \"id\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
+              "raw": "{\r\n    \"nome\": \"Campanha Errada\",\r\n    \"data\": \"2026-04-15\",\r\n    \"unidadeColeta\": {\r\n        \"id\": 1\r\n    },\r\n    \"itensCampanha\": [\r\n        {\r\n            \"metaColeta\": 1000,\r\n            \"tipoSanguineo\": {\r\n                \"id\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1904,7 +1903,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"nome\": \"Campanha Invasora\",\r\n    \"data\": \"2026-05-05\",\r\n    \"unidadeColeta\": {\r\n        \"id\": 1\r\n    },\r\n    \"itensCampanha\": [\r\n        {\r\n            \"metaColeta\": 1000,\r\n            \"tipoSanguineo\": {\r\n                \"id\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
+              "raw": "{\r\n    \"nome\": \"Campanha Errada\",\r\n    \"data\": \"2026-05-05\",\r\n    \"unidadeColeta\": {\r\n        \"id\": 1\r\n    },\r\n    \"itensCampanha\": [\r\n        {\r\n            \"metaColeta\": 1000,\r\n            \"tipoSanguineo\": {\r\n                \"id\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"

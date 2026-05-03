@@ -1,9 +1,10 @@
 {
   "info": {
-    "_postman_id": "63be918e-7061-4c42-be10-284a2c3c4dd0",
+    "_postman_id": "4e4bf897-fcdb-4ab2-bfa4-31c3b9078143",
     "name": "HemoCore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "53898713"
+    "_exporter_id": "53743891",
+    "_collection_link": "https://go.postman.co/collection/53743891-4e4bf897-fcdb-4ab2-bfa4-31c3b9078143?source=collection_link"
   },
   "item": [
     {
@@ -153,7 +154,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"data\": \"2030-99-99\",\n    \"quantia\": 450,\n    \"doador\": {},\n    \"enfermeiro\": {},\n    \"unidadeColeta\": {}\n}",
+              "raw": "{\n    \"data\": \"2030-99-99\",\n    \"quantia\": 400,\n    \"doador\": {},\n    \"enfermeiro\": {},\n    \"unidadeColeta\": {}\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -255,7 +256,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"data\": \"2026-07-28\",\n    \"quantia\": 450,\n    \"doador\": { \"id\": 4 },\n    \"enfermeiro\": { \"id\": 2 },\n    \"unidadeColeta\": { \"id\": 1 }\n}",
+              "raw": "{\n    \"data\": \"2026-09-28\",\n    \"quantia\": 450,\n    \"doador\": { \"id\": 4 },\n    \"enfermeiro\": { \"id\": 2 },\n    \"unidadeColeta\": { \"id\": 1 }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2581,57 +2582,6 @@
           "response": []
         }
       ]
-    },
-    {
-      "name": "Insert Doacoes - Erros",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Successful POST request\", function () {",
-              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-              "});",
-              ""
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        }
-      ],
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"data\": \"2030-99-99\",\n    \"quantia\": 450,\n    \"doador\": {},\n    \"enfermeiro\": {},\n    \"unidadeColeta\": {}\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3333/doacoes",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3333",
-          "path": [
-            "doacoes"
-          ]
-        },
-        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
-      },
-      "response": []
     }
   ]
 }

@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "4e4bf897-fcdb-4ab2-bfa4-31c3b9078143",
+    "_postman_id": "10bd5453-a18e-4d04-ad85-f78435cfca1c",
     "name": "HemoCore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "53743891",
-    "_collection_link": "https://go.postman.co/collection/53743891-4e4bf897-fcdb-4ab2-bfa4-31c3b9078143?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/53743891-10bd5453-a18e-4d04-ad85-f78435cfca1c?source=collection_link"
   },
   "item": [
     {
@@ -333,7 +333,8 @@
           },
           "response": []
         }
-      ]
+      ],
+      "description": "**Validação de data futura temporariamente comentada para fins de demonstração da 2º Regra de Negócio.**\n\nDurante a apresentação/teste da aplicação da pasta **Doações**, será utilizada uma data futura  \nna requisição de inserção de doação (Insert Doacoes - 2º Regra de Negócio) para simular o cenário solicitado pelo professor.\n\n_Após a validação da regra, este trecho deve ser reativado para impedir__o cadastro de doações com datas futuras._\n\nObs.: O teste se baseia no doador com o **id: 4**, caso queira confirmar, vá até a pasta de Doações -> Get Doações By Id e conte quantas doações esse doador possui, já adianto que são 3.\n\nApós a inserção da doação desse doador com o **id: 4**, volte para pra Doações -> Get Doações By Id e conte quantas doações esse doador possui, já adianto que serão 4.\n\nApós isso, vá em Doadores -> Get Doadores By Id (já está pelo **id: 4**) e veja o status, com a regra de negócio feita, ele estará com o status de **INAPTO**."
     },
     {
       "name": "Enfermeiros",

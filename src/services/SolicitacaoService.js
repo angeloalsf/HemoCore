@@ -127,7 +127,7 @@ class SolicitacaoService {
     }
   }
 
-  // Regra de Negócio 1: A solicitação somente poderá ser marcada como “Realizada” se houver quantidade suficiente do item solicitado em estoque no momento da efetivação.
+  // Regra de Negócio 1: A solicitação somente poderá ser criada se houver quantidade suficiente do item solicitado em estoque no momento da efetivação.
   // Regra de Negócio 2: Se já houver 2 OU MAIS solicitações com urgência ALTA canceladas para um mesmo hospital num período de 7 DIAS para o mesmo TIPO SANGUÍNEO, o mesmo ganha prioridade no processo (urgência CRÍTICA). 
   static async verificarRegrasDeNegocio(req) {
     const { itensSolicitacao } = req.body;

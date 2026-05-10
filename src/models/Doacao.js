@@ -22,21 +22,21 @@ class Doacao extends Model {
               msg: 'Data deve ser uma data válida'
             },
 
-            isNotFuture(value) {
-              const dataInformada = new Date(value);
+            // isNotFuture(value) {
+            //   const dataInformada = new Date(value);
 
-              // 🔴 verifica se é inválida
-              if (isNaN(dataInformada.getTime())) return;
+            //   // 🔴 verifica se é inválida
+            //   if (isNaN(dataInformada.getTime())) return;
 
-              const hoje = new Date();
+            //   const hoje = new Date();
 
-              hoje.setHours(0, 0, 0, 0);
-              dataInformada.setHours(0, 0, 0, 0);
+            //   hoje.setHours(0, 0, 0, 0);
+            //   dataInformada.setHours(0, 0, 0, 0);
 
-              if (dataInformada > hoje) {
-                throw new Error('Data da doação não pode ser futura');
-              }
-            }
+            //   if (dataInformada > hoje) {
+            //     throw new Error('Data da doação não pode ser futura');
+            //   }
+            // }
           }
         },
 

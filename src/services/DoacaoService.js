@@ -29,27 +29,56 @@ class DoacaoService {
     if (enfermeiro == null) throw 'Enfermeiro deve ser preenchido!';
     if (unidadeColeta == null) throw 'Unidade de coleta deve ser preenchida!';
 
-    if (await this.verificarRegrasDeNegocio(req)) {
+    await this.verificarRegrasDeNegocio(req);
 
-      const t = await sequelize.transaction();
+    const t = await sequelize.transaction();
 
-      try {
-        const obj = await Doacao.create({
-          data,
-          quantia,
+    try {
+
+      const obj = await Doacao.create({
+        data,
+        quantia,
+        doadorId: doador.id,
+        enfermeiroId: enfermeiro.id,
+        unidadeColetaId: unidadeColeta.id
+      }, { transaction: t });
+
+      // 🔥 Recalcular doações no ano (já com a nova)
+      const dataDoacao = new Date(data);
+      const inicioAno = new Date(dataDoacao.getFullYear(), 0, 1);
+      const fimAno = new Date(dataDoacao.getFullYear(), 11, 31, 23, 59, 59);
+
+      const doadorCompleto = await Doador.findByPk(doador.id, { transaction: t });
+
+      const totalDoacoes = await Doacao.count({
+        where: {
           doadorId: doador.id,
-          enfermeiroId: enfermeiro.id,
-          unidadeColetaId: unidadeColeta.id
-        }, { transaction: t });
+          data: {
+            [Op.between]: [inicioAno, fimAno]
+          }
+        },
+        transaction: t
+      });
 
-        await t.commit();
+      const limite = doadorCompleto.sexo === 'M' ? 4 : 3;
 
-        return await Doacao.findByPk(obj.id, { include: { all: true, nested: true } });
-
-      } catch (error) {
-        await t.rollback();
-        throw error;
+      // ✅ Aqui sim atualiza com segurança
+      if (totalDoacoes >= limite) {
+        await doadorCompleto.update(
+          { status: 'INAPTO' },
+          { transaction: t }
+        );
       }
+
+      await t.commit();
+
+      return await Doacao.findByPk(obj.id, {
+        include: { all: true, nested: true }
+      });
+
+    } catch (error) {
+      await t.rollback();
+      throw error;
     }
   }
 
@@ -67,33 +96,69 @@ class DoacaoService {
     if (enfermeiro == null) throw 'Enfermeiro deve ser preenchido!';
     if (unidadeColeta == null) throw 'Unidade de coleta deve ser preenchida!';
 
-    if (await this.verificarRegrasDeNegocio(req, id)) {
+    await this.verificarRegrasDeNegocio(req, id);
 
-      const obj = await Doacao.findByPk(id);
+    const obj = await Doacao.findByPk(id);
 
-      if (obj == null) throw 'Doação não encontrada!';
+    if (obj == null) throw 'Doação não encontrada!';
 
-      const t = await sequelize.transaction();
+    const t = await sequelize.transaction();
 
-      try {
-        Object.assign(obj, {
-          data,
-          quantia,
+    try {
+
+      // Atualiza a doação
+      Object.assign(obj, {
+        data,
+        quantia,
+        doadorId: doador.id,
+        enfermeiroId: enfermeiro.id,
+        unidadeColetaId: unidadeColeta.id
+      });
+
+      await obj.save({ transaction: t });
+
+      // 🔥 Recalcular doações no ano (considerando a nova data)
+      const dataDoacao = new Date(data);
+      const inicioAno = new Date(dataDoacao.getFullYear(), 0, 1);
+      const fimAno = new Date(dataDoacao.getFullYear(), 11, 31, 23, 59, 59);
+
+      const doadorCompleto = await Doador.findByPk(doador.id, { transaction: t });
+
+      const totalDoacoes = await Doacao.count({
+        where: {
           doadorId: doador.id,
-          enfermeiroId: enfermeiro.id,
-          unidadeColetaId: unidadeColeta.id
-        });
+          data: {
+            [Op.between]: [inicioAno, fimAno]
+          }
+        },
+        transaction: t
+      });
 
-        await obj.save({ transaction: t });
+      const limite = doadorCompleto.sexo === 'M' ? 4 : 3;
 
-        await t.commit();
-
-        return await Doacao.findByPk(obj.id, { include: { all: true, nested: true } });
-
-      } catch (error) {
-        await t.rollback();
-        throw error;
+      // ✅ Atualiza status corretamente
+      if (totalDoacoes >= limite) {
+        await doadorCompleto.update(
+          { status: 'INAPTO' },
+          { transaction: t }
+        );
+      } else {
+        // 🔥 IMPORTANTE: pode voltar a ser APTO
+        await doadorCompleto.update(
+          { status: 'APTO' },
+          { transaction: t }
+        );
       }
+
+      await t.commit();
+
+      return await Doacao.findByPk(obj.id, {
+        include: { all: true, nested: true }
+      });
+
+    } catch (error) {
+      await t.rollback();
+      throw error;
     }
   }
 
@@ -139,14 +204,16 @@ class DoacaoService {
     }
 
     // Buscar doações do ano atual
-    const inicioAno = new Date(new Date().getFullYear(), 0, 1);
-    const hoje = new Date();
+    const dataDoacao = new Date(data);
+
+    const inicioAno = new Date(dataDoacao.getFullYear(), 0, 1);
+    const fimAno = new Date(dataDoacao.getFullYear(), 11, 31, 23, 59, 59);
 
     const doacoes = await Doacao.findAll({
       where: {
         doadorId: doador.id,
         data: {
-          [Op.between]: [inicioAno, hoje]
+          [Op.between]: [inicioAno, fimAno]
         }
       },
       order: [['data', 'DESC']]
@@ -162,8 +229,7 @@ class DoacaoService {
     const intervaloMinimo = sexo === 'M' ? 60 : 90;
 
     // Regra: limite anual
-    if (doacoesFiltradas.length >= limite) {
-      await doadorCompleto.update({ status: 'INAPTO' });
+    if (doacoesFiltradas.length + 1 > limite) {
       throw `Limite anual atingido: ${doacoesFiltradas.length}/${limite} doações já realizadas este ano.`;
     }
 
@@ -179,7 +245,7 @@ class DoacaoService {
       const diasRestantes = intervaloMinimo - diffDias;
 
       if (diffDias < intervaloMinimo) {
-        throw `Intervalo mínimo não respeitado. Aguarde mais ${diasRestantes} dias para próxima doação.`;
+        throw `Intervalo mínimo de ${intervaloMinimo} dias não respeitado. Aguarde mais ${diasRestantes} dias para próxima doação.`;
       }
     }
 

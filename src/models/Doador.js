@@ -21,6 +21,26 @@ class Doador extends Model {
           }
         },
 
+        sexo: {
+          type: DataTypes.ENUM(
+            'M',
+            'F'
+          ),
+          allowNull: false,
+          validate: {
+            notNull: {
+              msg: 'Sexo do Doador deve ser preenchido!'
+            },
+            notEmpty: {
+              msg: "Sexo do Doador deve ser preenchido!"
+            },
+            isIn: {
+              args: [['M', 'F']],
+              msg: 'Sexo do Doador deve ser M ou F',
+            },
+          }
+        },
+
         telefone: {
           type: DataTypes.STRING,
           allowNull: false,

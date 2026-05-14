@@ -1,10 +1,9 @@
 {
   "info": {
-    "_postman_id": "10bd5453-a18e-4d04-ad85-f78435cfca1c",
+    "_postman_id": "b445535f-587d-4ae1-8dd7-4a5e2530ec64",
     "name": "HemoCore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "53743891",
-    "_collection_link": "https://go.postman.co/collection/53743891-10bd5453-a18e-4d04-ad85-f78435cfca1c?source=collection_link"
+    "_exporter_id": "32308250"
   },
   "item": [
     {
@@ -2227,155 +2226,6 @@
       ]
     },
     {
-      "name": "Recepcionista",
-      "item": [
-        {
-          "name": "findAll",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3333/recepcionistas",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3333",
-              "path": [
-                "recepcionistas"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "findById",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3333/recepcionistas/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3333",
-              "path": [
-                "recepcionistas",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "create",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"nome\": \"Caio Torres\",\r\n    \"telefone\": \"(28) 99333-2222\",\r\n    \"cpf\": \"993.456.789-99\",\r\n    \"login\": \"caio\",\r\n    \"senha\": \"password123\",\r\n    \"cidade\": { \"id\": 1 }\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3333/recepcionistas",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3333",
-              "path": [
-                "recepcionistas"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "create ERROR",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"nome\": \"\",\r\n    \"telefone\": \"9933\",\r\n    \"cpf\": \"99345678999\",\r\n    \"login\": \"\",\r\n    \"senha\": \"\",\r\n    \"cidade\": { \"id\": null }\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3333/recepcionistas",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3333",
-              "path": [
-                "recepcionistas"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "update",
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"nome\": \"teste mudando\",\r\n    \"telefone\": \"(28) 99333-2222\",\r\n    \"cpf\": \"999.456.789-99\",\r\n    \"login\": \"teste\",\r\n    \"senha\": \"password123\",\r\n    \"cidade\": { \"id\": 1 }\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3333/recepcionistas/2",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3333",
-              "path": [
-                "recepcionistas",
-                "2"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "delete",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3333/recepcionistas/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3333",
-              "path": [
-                "recepcionistas",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
       "name": "Solicitacao",
       "item": [
         {
@@ -2577,6 +2427,232 @@
               "path": [
                 "solicitacoes",
                 "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "relatorio (Por Hospital)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3333/solicitacoes/por-hospital/3?inicio=2025-05-14",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "solicitacoes",
+                "por-hospital",
+                "3"
+              ],
+              "query": [
+                {
+                  "key": "inicio",
+                  "value": "2025-05-14"
+                },
+                {
+                  "key": "termino",
+                  "value": "2027-05-14",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "relatorio (Maiores solicitantes por tipo sanguineo)",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"inicio\": \"2026-05-14\",\r\n    \"termino\": \"2026-06-16\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/solicitacoes/maiores-solicitantes-por-tipo-sanguineo/4?inicio=2026-05-14&termino=2027-05-14",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "solicitacoes",
+                "maiores-solicitantes-por-tipo-sanguineo",
+                "4"
+              ],
+              "query": [
+                {
+                  "key": "inicio",
+                  "value": "2026-05-14",
+                  "type": "text"
+                },
+                {
+                  "key": "termino",
+                  "value": "2027-05-14",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Recepcionista",
+      "item": [
+        {
+          "name": "findAll",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3333/recepcionistas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "recepcionistas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "findById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3333/recepcionistas/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "recepcionistas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nome\": \"Caio Torres\",\r\n    \"telefone\": \"(28) 99333-2222\",\r\n    \"cpf\": \"993.456.789-99\",\r\n    \"login\": \"caio\",\r\n    \"senha\": \"password123\",\r\n    \"cidade\": { \"id\": 1 }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/recepcionistas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "recepcionistas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create ERROR",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nome\": \"\",\r\n    \"telefone\": \"9933\",\r\n    \"cpf\": \"99345678999\",\r\n    \"login\": \"\",\r\n    \"senha\": \"\",\r\n    \"cidade\": { \"id\": null }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/recepcionistas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "recepcionistas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nome\": \"teste mudando\",\r\n    \"telefone\": \"(28) 99333-2222\",\r\n    \"cpf\": \"999.456.789-99\",\r\n    \"login\": \"teste\",\r\n    \"senha\": \"password123\",\r\n    \"cidade\": { \"id\": 1 }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/recepcionistas/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "recepcionistas",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3333/recepcionistas/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "recepcionistas",
+                "1"
               ]
             }
           },

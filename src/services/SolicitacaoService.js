@@ -210,6 +210,12 @@ class SolicitacaoService {
     return await SolicitacaoRepository.findSolicitacoesByHospital(hospitalId, inicio, termino);
   }
 
+  static async findMaioresSolicitantes(req) {
+    const { tipoSanguineoId } = req.params;
+    const { inicio, termino } = req.query;
+    return await SolicitacaoRepository.findMaioresSolicitantes(tipoSanguineoId, inicio, termino);
+  }
+
 }
 
 export { SolicitacaoService };

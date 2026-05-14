@@ -38,6 +38,12 @@ class SolicitacaoController {
         .catch(next);
   }
 
+  static async findMaioresSolicitantes(req, res, next) {
+    SolicitacaoService.findMaioresSolicitantes(req)
+        .then(objs => res.json(objs))
+        .catch(next);
+  }
+
 }
 
 export { SolicitacaoController };

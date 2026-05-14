@@ -65,6 +65,7 @@ routes.get('/doadores/:id', DoadorController.findByPk);
 routes.post('/doadores', DoadorController.create);
 routes.put('/doadores/:id', DoadorController.update);
 routes.delete('/doadores/:id', DoadorController.delete);
+routes.get('/doadores/relatorio/porTipoSanguineo/:dataInicio/:dataFim', DoadorController.relatorioDoadoresPorTipoSanguineo);
 
 routes.get('/doacoes', DoacaoController.findAll);
 routes.get('/doacoes/:id', DoacaoController.findByPk);

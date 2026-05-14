@@ -32,6 +32,15 @@ class DoadorController {
         .catch(next);
   }
 
+  static async relatorioDoadoresPorTipoSanguineo(req, res, next) {
+      DoadorService.relatorioDoadoresPorTipoSanguineo(req)
+          .then(objs => res.json(objs))
+          .catch(err => {
+              console.error("ERRO RELATÓRIO:", err); // <- adicione isso
+              next(err);
+          });
+  }
+
 }
 
 export { DoadorController };

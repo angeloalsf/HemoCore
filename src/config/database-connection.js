@@ -106,7 +106,7 @@ function databaseInserts() {
             nome: "Hospital Santa Casa",
             sigla: "HSC",
             telefone: "(28) 99999-9999",
-            CNPJ: "12.345.678/0001-95",
+            cnpj: "12.345.678/0001-95",
             tipo: "FILANTRÓPICO",
             cidadeId: 1,
         });
@@ -115,7 +115,7 @@ function databaseInserts() {
             nome: "Hospital Estadual Dr. Jayme Santos Neves",
             sigla: "HEJSN",
             telefone: "(27) 99888-7777",
-            CNPJ: "23.456.789/0001-12",
+            cnpj: "23.456.789/0001-12",
             tipo: "PUBLICO",
             cidadeId: 2,
         });
@@ -124,7 +124,7 @@ function databaseInserts() {
             nome: "Hospital Evangélico de Vila Velha",
             sigla: "HEVV",
             telefone: "(27) 98765-4321",
-            CNPJ: "34.567.890/0001-23",
+            cnpj: "34.567.890/0001-23",
             tipo: "PRIVADO",
             cidadeId: 3,
         });
@@ -133,7 +133,7 @@ function databaseInserts() {
             nome: "Hospital Unimed Sul Capixaba",
             sigla: "HUSC",
             telefone: "(28) 99999-1111",
-            CNPJ: "45.678.901/0001-34",
+            cnpj: "45.678.901/0001-34",
             tipo: "FILANTRÓPICO",
             cidadeId: 1,
         });

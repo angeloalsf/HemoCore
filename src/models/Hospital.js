@@ -42,7 +42,7 @@ class Hospital extends Model {
             },
           },
         },
-        CNPJ: {
+        cnpj: {
           type: DataTypes.STRING(18),
           allowNull: false,
           unique: true,

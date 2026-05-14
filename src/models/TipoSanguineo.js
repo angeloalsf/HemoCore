@@ -8,6 +8,7 @@ class TipoSanguineo extends Model {
     super.init({
       grupoABO: { 
         type: DataTypes.STRING, 
+        field: 'grupo_abo', 
         allowNull: false,
         validate: {
           notEmpty: { msg: "Grupo ABO deve ser preenchida!" },
@@ -16,6 +17,7 @@ class TipoSanguineo extends Model {
       },
       fatorRH: {
         type: DataTypes.BOOLEAN,
+        field: 'fator_rh', 
         allowNull: false,
         validate: {
           notNull: { msg: "Fator RH deve ser informado!" }

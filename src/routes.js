@@ -73,6 +73,7 @@ routes.put('/doacoes/:id', DoacaoController.update);
 routes.delete('/doacoes/:id', DoacaoController.delete);
 
 routes.get('/solicitacoes', SolicitacaoController.findAll);
+routes.get('/solicitacoes/por-hospital/:hospitalId', SolicitacaoController.findSolicitacoesByHospital);
 routes.get('/solicitacoes/:id', SolicitacaoController.findByPk);
 routes.post('/solicitacoes', SolicitacaoController.create);
 routes.put('/solicitacoes/:id', SolicitacaoController.update);

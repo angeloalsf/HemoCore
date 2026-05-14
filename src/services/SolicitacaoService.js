@@ -2,6 +2,7 @@ import { Solicitacao } from '../models/Solicitacao.js';
 import { TipoSanguineo } from '../models/TipoSanguineo.js';
 import { ItemSolicitacao } from '../models/ItemSolicitacao.js';
 import { TipoSanguineoService } from './TipoSanguineoService.js';
+import { SolicitacaoRepository } from '../repository/SolicitacaoRepository.js';
 import sequelize from '../config/database-connection.js';
 import { Op } from 'sequelize';
 
@@ -201,6 +202,12 @@ class SolicitacaoService {
     if (tipoSanguineoFromBanco.quantidade < quantidade) {
       throw `Estoque insuficiente para o tipo sanguíneo ${tipoSanguineoFromBanco.getModelVerboso()}: Estoque disponível ${tipoSanguineoFromBanco.quantidade}, quantia solicitada ${quantidade}.`;
     }
+  }
+
+  static async findSolicitacoesByHospital(req) {
+    const { hospitalId } = req.params;
+    const { inicio, termino } = req.query;
+    return await SolicitacaoRepository.findSolicitacoesByHospital(hospitalId, inicio, termino);
   }
 
 }

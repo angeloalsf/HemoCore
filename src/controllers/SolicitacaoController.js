@@ -32,6 +32,12 @@ class SolicitacaoController {
         .catch(next);
   }
 
+  static async findSolicitacoesByHospital(req, res, next) {
+    SolicitacaoService.findSolicitacoesByHospital(req)
+        .then(objs => res.json(objs))
+        .catch(next);
+  }
+
 }
 
 export { SolicitacaoController };

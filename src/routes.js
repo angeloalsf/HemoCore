@@ -86,6 +86,8 @@ routes.post('/unidades-coleta', UnidadeColetaController.create);
 routes.put('/unidades-coleta/:id', UnidadeColetaController.update);
 routes.delete('/unidades-coleta/:id', UnidadeColetaController.delete);
 
+routes.get('/campanhas/agenda', CampanhaController.findAgendaCampanhas);
+routes.get('/campanhas/coletas-por-cidade', CampanhaController.findColetasPorCidade);
 routes.get('/campanhas', CampanhaController.findAll);
 routes.get('/campanhas/:id', CampanhaController.findByPk);
 routes.post('/campanhas', CampanhaController.create);

@@ -1,9 +1,9 @@
 {
   "info": {
-    "_postman_id": "b445535f-587d-4ae1-8dd7-4a5e2530ec64",
+    "_postman_id": "c8f12a41-ceaa-4add-8914-e8701a0f9132",
     "name": "HemoCore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "32308250"
+    "_exporter_id": "53898713"
   },
   "item": [
     {
@@ -1799,7 +1799,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"nome\": \"Campanha de Abril Solidário\",\r\n  \"data\": \"2026-04-30\",\r\n  \"unidadeColeta\": {\r\n    \"id\": 1\r\n  },\r\n  \"itensCampanha\": [\r\n    {\r\n      \"metaColeta\": 6000,\r\n      \"tipoSanguineo\": {\r\n        \"id\": 4\r\n      }\r\n    },\r\n    {\r\n      \"metaColeta\": 2000,\r\n      \"tipoSanguineo\": {\r\n        \"id\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
+              "raw": "{\r\n  \"nome\": \"Campanha de Abril Solidário\",\r\n  \"data\": \"2026-04-30\",\r\n  \"unidadeColeta\": {\r\n    \"id\": 3\r\n  },\r\n  \"itensCampanha\": [\r\n    {\r\n      \"metaColeta\": 6000,\r\n      \"quantiaColetada\": 1000,\r\n      \"tipoSanguineo\": {\r\n        \"id\": 4\r\n      }\r\n    },\r\n    {\r\n      \"metaColeta\": 2000,\r\n      \"quantiaColetada\": 4000,\r\n      \"tipoSanguineo\": {\r\n        \"id\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
               "options": {
                 "raw": {
                   "language": "text"
@@ -1807,7 +1807,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3333/campanhas/5",
+              "raw": "http://localhost:3333/campanhas/4",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1815,7 +1815,7 @@
               "port": "3333",
               "path": [
                 "campanhas",
-                "5"
+                "4"
               ]
             }
           },
@@ -1920,6 +1920,72 @@
               "port": "3333",
               "path": [
                 "campanhas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Relatório (Listar Agenda de Campanhas)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3333/campanhas/agenda?ufId=1&cidadeId=2&unidadeColetaId=3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "campanhas",
+                "agenda"
+              ],
+              "query": [
+                {
+                  "key": "ufId",
+                  "value": "1"
+                },
+                {
+                  "key": "cidadeId",
+                  "value": "2"
+                },
+                {
+                  "key": "unidadeColetaId",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Relatório (Coletas por Cidade)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3333/campanhas/coletas-por-cidade?ufId=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "campanhas",
+                "coletas-por-cidade"
+              ],
+              "query": [
+                {
+                  "key": "ufId",
+                  "value": "1"
+                }
               ]
             }
           },

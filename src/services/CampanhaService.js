@@ -1,6 +1,7 @@
 import { Campanha } from '../models/Campanha.js';
 import { ItemCampanha } from '../models/ItemCampanha.js';
 import { UnidadeColeta } from '../models/UnidadeColeta.js';
+import { CampanhaRepository } from '../repository/CampanhaRepository.js';
 import sequelize from '../config/database-connection.js';
 import { Op } from 'sequelize';
 
@@ -163,6 +164,20 @@ class CampanhaService {
         }
 
         return true;
+    }
+
+static async findAgendaCampanhas(req) {
+         const { cidadeId, unidadeColetaId, ufId } = req.query;
+        
+        const relatorio = await CampanhaRepository.findAgendaCampanhas(cidadeId, unidadeColetaId, ufId);
+        return relatorio;
+    }
+
+static async findColetasPorCidade(req) {
+        const { ufId } = req.query;
+
+        const relatorio = await CampanhaRepository.findColetasPorCidade(ufId);
+        return relatorio;
     }
 }
 

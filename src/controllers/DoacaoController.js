@@ -32,6 +32,18 @@ class DoacaoController {
         .catch(next);
   }
 
+  static async findSomatorioPorTipoSanguineo(req, res, next) {
+    DoacaoService.findSomatorioPorTipoSanguineo(req)
+      .then(objs => res.json(objs))
+      .catch(next);
+  }
+
+  static async findDoadoresAtivos(req, res, next) {
+    DoacaoService.findDoadoresAtivos(req)
+      .then(objs => res.json(objs))
+      .catch(next);
+  }
+
 }
 
 export { DoacaoController };

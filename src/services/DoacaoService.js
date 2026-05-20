@@ -2,6 +2,7 @@ import { Doacao } from "../models/Doacao.js";
 import { Doador } from "../models/Doador.js";
 import sequelize from '../config/database-connection.js';
 import { Op } from 'sequelize';
+import { DoacaoRepository } from '../repository/DoacaoRepository.js';
 
 class DoacaoService {
 
@@ -180,6 +181,16 @@ class DoacaoService {
       await t.rollback();
       throw error;
     }
+  }
+
+  static async findSomatorioPorTipoSanguineo(req) {
+    const { dataInicio, dataFim } = req.query;
+    return DoacaoRepository.findSomatorioPorTipoSanguineo(dataInicio, dataFim);
+  }
+
+  static async findDoadoresAtivos(req) {
+    const { tipoSanguineo, dataInicio, dataFim } = req.query;
+    return DoacaoRepository.findDoadoresAtivos(tipoSanguineo, dataInicio, dataFim);
   }
 
   static async verificarRegrasDeNegocio(req, doacaoId = null) {

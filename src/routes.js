@@ -16,6 +16,14 @@ import { CampanhaController } from "./controllers/CampanhaController.js";
 
 const routes = express.Router();
 
+// Rotas de status da API
+routes.get('/', (req, res) => {
+  res.send('API está funcionando');
+});
+
+routes.get('/health', (req, res) => {
+  res.status(200).json({ status: 'UP' });
+});
 
 routes.get('/ufs', UfController.findAll);
 routes.get('/ufs/:id', UfController.findByPk);

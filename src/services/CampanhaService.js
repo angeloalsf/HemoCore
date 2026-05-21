@@ -48,7 +48,7 @@ class CampanhaService {
                 return await Campanha.findByPk(obj.id, { include: { all: true, nested: true } });
 
             } catch (error) {
-                await t.rollback(); 
+                await t.rollback();
                 throw error;
             }
         }
@@ -131,10 +131,10 @@ class CampanhaService {
         // Regra de Negócio 2: Apenas 1 campanha na MESMA Cidade no período de 7 dias
         const unidade = await UnidadeColeta.findByPk(unidadeColeta.id);
         if (!unidade) throw "Unidade de Coleta informada não existe!";
-        
+
         const dataInformada = new Date(data);
         if (isNaN(dataInformada.getTime())) return true;
-        
+
         const dataInicio = new Date(dataInformada);
         dataInicio.setUTCDate(dataInicio.getUTCDate() - 7);
 
@@ -166,14 +166,14 @@ class CampanhaService {
         return true;
     }
 
-static async findAgendaCampanhas(req) {
-         const { cidadeId, unidadeColetaId, ufId } = req.query;
-        
+    static async findAgendaCampanhas(req) {
+        const { cidadeId, unidadeColetaId, ufId } = req.query;
+
         const relatorio = await CampanhaRepository.findAgendaCampanhas(cidadeId, unidadeColetaId, ufId);
         return relatorio;
     }
 
-static async findColetasPorCidade(req) {
+    static async findColetasPorCidade(req) {
         const { ufId } = req.query;
 
         const relatorio = await CampanhaRepository.findColetasPorCidade(ufId);

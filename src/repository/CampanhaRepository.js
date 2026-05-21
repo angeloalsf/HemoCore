@@ -49,7 +49,7 @@ class CampanhaRepository {
       JOIN cidades cid ON uc.cidade_id = cid.id
       JOIN ufs u ON cid.uf_id = u.id
       ${whereClause}
-      ORDER BY c.data ASC
+      ORDER BY c.data DESC
     `;
 
     return sequelize.query(sql, { replacements, type: QueryTypes.SELECT });
@@ -62,8 +62,7 @@ class CampanhaRepository {
    */
   static async findColetasPorCidade(ufId) {
     const conditions = [
-      'c.data < CURRENT_DATE',
-      'ic.quantia_coletada > 0'
+      'c.data < CURRENT_DATE'
     ];
     const replacements = {};
 

@@ -1,9 +1,9 @@
 {
   "info": {
-    "_postman_id": "92e3f985-af0a-4fbd-9b60-e18fe65be871",
+    "_postman_id": "0fe6ccfa-ac46-4b27-bb8c-ecc6b6af3912",
     "name": "HemoCore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "32308250"
+    "_exporter_id": "53898713"
   },
   "item": [
     {
@@ -2125,7 +2125,7 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:3333/campanhas/agenda?ufId=1&cidadeId=2&unidadeColetaId=3",
+              "raw": "http://localhost:3333/campanhas/agenda?ufId=1&cidadeId=1&unidadeColetaId=1",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2142,11 +2142,11 @@
                 },
                 {
                   "key": "cidadeId",
-                  "value": "2"
+                  "value": "1"
                 },
                 {
                   "key": "unidadeColetaId",
-                  "value": "3"
+                  "value": "1"
                 }
               ]
             }

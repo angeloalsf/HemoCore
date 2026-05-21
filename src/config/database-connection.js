@@ -150,14 +150,14 @@ function databaseInserts() {
             nome: "Unidade de Coleta 2",
             tipo_unidade: "MÓVEL",
             telefone: "(28) 88888-8888",
-            cidadeId: 1
+            cidadeId: 2
         });
 
         const unidadeColeta3 = await UnidadeColeta.create({
             nome: "Unidade de Coleta 3",
             tipo_unidade: "FIXA",
             telefone: "(28) 77777-7777",
-            cidadeId: 2
+            cidadeId: 3
         });
 
         const unidadeColeta4 = await UnidadeColeta.create({
@@ -446,14 +446,14 @@ function databaseInserts() {
 
         const campanha3 = await Campanha.create({
             nome: "Salve Vidas IFES",
-            data: "2026-06-18",
+            data: "2026-02-18",
             unidadeColetaId: 3
         });
 
         const campanha4 = await Campanha.create({
             nome: "Campanha de Inverno Solidário",
-            data: "2026-07-20",
-            unidadeColetaId: 1
+            data: "2026-03-20",
+            unidadeColetaId: 4
         });
 
 
@@ -483,6 +483,13 @@ function databaseInserts() {
             quantiaColetada: 1500,
             campanhaId: 3,
             tipoSanguineoId: 3
+        });
+
+        const itemCampanha5 = await ItemCampanha.create({
+            metaColeta: 3500,
+            quantiaColetada: 1500,
+            campanhaId: 4,
+            tipoSanguineoId: 4
         });
 
         // Caio Torres - Regra de negócio 2:

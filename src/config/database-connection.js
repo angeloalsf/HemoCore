@@ -72,31 +72,31 @@ function databaseInserts() {
             TipoSanguineo.create({
                 grupoABO: 'A',
                 fatorRH: true,
-                quantidade: 120,
+                quantidade: 2000,
                 descricao: 'Tipo Sanguíneo A positivo'
             }),
             TipoSanguineo.create({
                 grupoABO: 'A',
                 fatorRH: false,
-                quantidade: 80,
+                quantidade: 1000,
                 descricao: 'Tipo Sanguíneo A negativo'
             }),
             TipoSanguineo.create({
                 grupoABO: 'B',
                 fatorRH: true,
-                quantidade: 60,
+                quantidade: 6000,
                 descricao: 'Tipo Sanguíneo B positivo'
             }),
             TipoSanguineo.create({
                 grupoABO: 'O',
                 fatorRH: true,
-                quantidade: 200,
+                quantidade: 500,
                 descricao: 'Tipo Sanguíneo O positivo'
             }),
             TipoSanguineo.create({
                 grupoABO: 'AB',
                 fatorRH: true,
-                quantidade: 40,
+                quantidade: 0,
                 descricao: 'Tipo Sanguíneo AB positivo'
             })
         ]);
@@ -408,25 +408,25 @@ function databaseInserts() {
 
 
         const itemSolicitacao1 = await ItemSolicitacao.create({
-            quantidade: 2,
+            quantidade: 2000,
             solicitacaoId: 1,
             tipoSanguineoId: 4
         });
 
         const itemSolicitacao2 = await ItemSolicitacao.create({
-            quantidade: 1,
+            quantidade: 1000,
             solicitacaoId: 1,
             tipoSanguineoId: 1
         });
 
         const itemSolicitacao3 = await ItemSolicitacao.create({
-            quantidade: 4,
+            quantidade: 500,
             solicitacaoId: 2,
             tipoSanguineoId: 2
         });
 
         const itemSolicitacao4 = await ItemSolicitacao.create({
-            quantidade: 10,
+            quantidade: 1000,
             solicitacaoId: 3,
             tipoSanguineoId: 3
         });
@@ -494,7 +494,7 @@ function databaseInserts() {
                 hospitalId: 3
             });
             await ItemSolicitacao.create({
-                quantidade: 1,
+                quantidade: 500,
                 solicitacaoId: s.id,
                 tipoSanguineoId: 4
             });

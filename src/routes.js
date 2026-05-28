@@ -18,7 +18,7 @@ const routes = express.Router();
 
 // Rotas de status da API
 routes.get('/', (req, res) => {
-  res.send('API está funcionando');
+  res.send('API está funcionando!');
 });
 
 routes.get('/health', (req, res) => {

@@ -35,7 +35,7 @@ class SolicitacaoRepository {
       SELECT 
         s.id, 
         h.nome AS hospital, 
-        (ts.grupo_abo || CASE WHEN ts.fator_rh = 1 THEN '+' ELSE '-' END) AS tipoSanguineo,
+        (ts.grupo_abo || CASE WHEN ts.fator_rh = TRUE THEN '+' ELSE '-' END) AS tipoSanguineo,
         SUM(is_table.quantidade) AS quantia,
         s.data AS dataSolicitacao
       FROM solicitacoes s
@@ -43,7 +43,7 @@ class SolicitacaoRepository {
       JOIN itens_solicitacao is_table ON is_table.solicitacao_id = s.id
       JOIN tipos_sanguineos ts ON is_table.tipo_sanguineo_id = ts.id
       ${whereClause}
-      GROUP BY h.nome, ts.grupo_abo, ts.fator_rh
+      GROUP BY s.id, h.nome, ts.grupo_abo, ts.fator_rh, s.data
     `;
 
     return sequelize.query(sql, { replacements, type: QueryTypes.SELECT });
@@ -79,7 +79,7 @@ class SolicitacaoRepository {
         h.id, 
         h.nome AS hospital, 
         h.cnpj,
-        (ts.grupo_abo || CASE WHEN ts.fator_rh = 1 THEN '+' ELSE '-' END) AS tipoSanguineo,
+        (ts.grupo_abo || CASE WHEN ts.fator_rh = TRUE THEN '+' ELSE '-' END) AS tipoSanguineo,
         SUM(is_table.quantidade) AS quantidade
       FROM hospitais h
       JOIN solicitacoes s ON s.hospital_id = h.id

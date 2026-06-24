@@ -21,7 +21,7 @@ class DoacaoRepository {
 
     const sql = `
       SELECT
-        ts.grupo_abo || (CASE WHEN ts.fator_rh = 1 THEN '+' ELSE '-' END) AS tipoSanguineo,
+        ts.grupo_abo || (CASE WHEN ts.fator_rh = TRUE THEN '+' ELSE '-' END) AS tipoSanguineo,
         COUNT(d.id) || ' Doações' AS total
       FROM doacoes d
       JOIN doadores doa ON d.doador_id = doa.id
@@ -60,7 +60,7 @@ class DoacaoRepository {
         doa.nome,
         doa.cpf,
         u.sigla AS uf,
-        ts.grupo_abo || (CASE WHEN ts.fator_rh = 1 THEN '+' ELSE '-' END) AS tipoSanguineo,
+        ts.grupo_abo || (CASE WHEN ts.fator_rh = TRUE THEN '+' ELSE '-' END) AS tipoSanguineo,
         doa.status,
         d.data AS dataDoacao
       FROM doacoes d

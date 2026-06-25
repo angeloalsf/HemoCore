@@ -230,9 +230,12 @@ class DoacaoService {
       order: [['data', 'DESC']]
     });
 
-    // Remove a própria doação no update
-    const doacoesFiltradas = doacaoId
-      ? doacoes.filter(d => d.id !== doacaoId)
+    // Remove a própria doação no update.
+    // OBS: doacaoId vem de req.params (string) e d.id é number — comparar
+    // com conversão evita que a própria doação seja contada na edição
+    // (o que disparava "intervalo mínimo não respeitado" ao editar).
+    const doacoesFiltradas = doacaoId != null
+      ? doacoes.filter(d => Number(d.id) !== Number(doacaoId))
       : doacoes;
 
     const sexo = doadorCompleto.sexo;

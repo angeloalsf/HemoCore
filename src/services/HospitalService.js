@@ -14,20 +14,20 @@ class HospitalService {
   }
 
   static async create(req) {
-    const { 
+    const {
         nome,
         sigla,
         telefone,
-        CNPJ,
+        cnpj,
         tipo,
         cidade
     } = req.body;
 
-    const obj = await Hospital.create({ 
+    const obj = await Hospital.create({
         nome,
         sigla,
         telefone,
-        CNPJ,
+        cnpj,
         tipo,
         cidadeId: cidade?.id ?? null
     });
@@ -37,11 +37,11 @@ class HospitalService {
 
   static async update(req) {
     const { id } = req.params;
-    const { 
-    nome, 
+    const {
+    nome,
     sigla,
     telefone,
-    CNPJ,
+    cnpj,
     tipo,
     cidade
     } = req.body;
@@ -49,11 +49,11 @@ class HospitalService {
     const obj = await Hospital.findByPk(id, { include: { all: true, nested: true } });
 
     if (obj == null) throw 'Hospital não encontrado!';
-    Object.assign(obj, { 
+    Object.assign(obj, {
     nome,
     sigla,
     telefone,
-    CNPJ,
+    cnpj,
     tipo,
     cidadeId: cidade?.id ?? null
     });

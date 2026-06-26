@@ -172,7 +172,27 @@ class DoacaoService {
     const t = await sequelize.transaction();
 
     try {
+      const doadorId = obj.doadorId;
+      const dataDoacao = new Date(obj.data);
+      const inicioAno = new Date(dataDoacao.getFullYear(), 0, 1);
+      const fimAno = new Date(dataDoacao.getFullYear(), 11, 31, 23, 59, 59);
+
       await obj.destroy({ transaction: t });
+
+      const doador = await Doador.findByPk(doadorId, { transaction: t });
+      const limite = doador.sexo === 'M' ? 4 : 3;
+
+      const totalDoacoes = await Doacao.count({
+        where: {
+          doadorId,
+          data: { [Op.between]: [inicioAno, fimAno] }
+        },
+        transaction: t
+      });
+
+      if (totalDoacoes < limite) {
+        await doador.update({ status: 'APTO' }, { transaction: t });
+      }
 
       await t.commit();
 

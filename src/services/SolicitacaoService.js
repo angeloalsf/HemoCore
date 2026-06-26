@@ -69,10 +69,12 @@ class SolicitacaoService {
     const t = await sequelize.transaction();
 
     try {
-      // 1. Devolver estoque dos itens antigos e removê-los
+      // 1. Devolver estoque dos itens antigos e removê-los (exceto cancelamento, que preserva os itens para histórico)
       for (const itemAntigo of obj.itensSolicitacao) {
         await TipoSanguineoService.adicionarEstoque(itemAntigo.tipoSanguineoId, itemAntigo.quantidade, t);
-        await itemAntigo.destroy({ transaction: t });
+        if (status !== 'CANCELADA') {
+          await itemAntigo.destroy({ transaction: t });
+        }
       }
 
       // 2. Atualizar dados da solicitação
